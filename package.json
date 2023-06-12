@@ -1,0 +1,47 @@
+{
+  "name": "worldweather-cli",
+  "version": "0.0.1",
+  "description": "A package to retrieve weather information directly from your terminal.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suptower/worldweather-cli.git"
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "weather",
+    "weatherapi",
+    "cli",
+    "terminal",
+    "javascript",
+    "js",
+    "npm",
+    "npm-package",
+    "climate",
+    "forecast",
+    "open-source",
+    "api"
+  ],
+  "author": "suptower",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/suptower/worldweather-cli/issues"
+  },
+  "homepage": "https://github.com/suptower/worldweather-cli#readme",
+  "devDependencies": {
+    "eslint": "^8.42.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "standard-version": "^9.5.0"
+  },
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "prompts": "^2.4.2"
+  }
+}
