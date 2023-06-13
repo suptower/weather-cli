@@ -104,17 +104,13 @@ const promptMenu = async response => {
       console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.current.last_updated) + "):"));
       console.log(chalk.magenta("Condition: " + chalk.cyan(response.current.condition.text)));
       console.log(chalk.magenta("Temperature: " + chalk.cyan(response.current.temp_c + "°C")));
-      console.log(chalk.blue("Wind:"));
-      console.log(chalk.magenta("Speed: " + chalk.cyan(response.current.wind_kph + " km/h")));
-      console.log(chalk.magenta("Direction: " + chalk.cyan(response.current.wind_dir)));
-      console.log(chalk.magenta(chalk.blue("Precipitation") + " Amount: " + chalk.cyan(response.current.precip_mm + " mm")));
-      console.log(chalk.magenta(chalk.blue("Precipitation") + " Chance: " + chalk.cyan(response.current.precip_in + " %")));
+      console.log(chalk.magenta("Wind Speed | Direction: " + chalk.cyan(response.current.wind_kph + " km/h | " + response.current.wind_dir)));
+      console.log(chalk.magenta("Precipitation ammount: " + chalk.cyan(response.current.precip_mm + " mm")));
       console.log(chalk.magenta("Humidity: " + chalk.cyan(response.current.humidity + " %")));
-      console.log(chalk.magenta("Cloud: " + chalk.cyan(response.current.cloud + " %")));
+      console.log(chalk.magenta("Cloud cover: " + chalk.cyan(response.current.cloud + " %")));
       console.log(chalk.magenta("UV Index: " + chalk.cyan(response.current.uv)));
       console.log(chalk.magenta("Visibility Distance: " + chalk.cyan(response.current.vis_km + " km")));
-      console.log(chalk.magenta(chalk.blue("Pressure") + " Amount: " + chalk.cyan(response.current.pressure_mb + " mb")));
-      console.log(chalk.magenta(chalk.blue("Pressure") + " Tendency: " + chalk.cyan(response.current.pressure_trend)));
+      console.log(chalk.magenta("Pressure Amount: " + chalk.cyan(response.current.pressure_mb + " mb")));
       break;
     case "forecast":
       console.log(chalk.blue("Forecast:"));
