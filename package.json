@@ -1,5 +1,5 @@
 {
-  "name": "@suptower/worldweather-cli",
+  "name": "@suptower/weather-cli",
   "version": "0.0.2",
   "description": "A package to retrieve weather information directly from your terminal.",
   "exports": "./index.js",
@@ -11,7 +11,7 @@
     "prettier": "prettier --write ."
   },
   "bin": {
-    "worldweather": "./index.js"
+    "weather": "./index.js"
   },
   "repository": {
     "type": "git",
