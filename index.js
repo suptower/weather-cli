@@ -20,6 +20,7 @@ const options = getopts(argv, {
         help: 'h',
         version: 'v',
         api: 'a',
+        env: 'e',
         prompt: 'p'
     }
 })
@@ -27,25 +28,36 @@ const options = getopts(argv, {
 if (options.help) {
     console.log(`
     Usage: 
-        $ weather [options]
-        $ weather [location]
+        $ worldweather [options]
+        $ worldweather [location]
 
     Options:
         -h, --help          output usage information
         -v, --version       output the version number
         -a, --api           set api key
+        -e, --env           set api key from environment variable
         -p, --prompt        prompt menu for detailed weather
 
     Examples:
-        $ weather Munich
-        $ weather --api
-        $ weather -v
+        $ worldweather Munich
+        $ worldweather --api
+        $ worldweather -v
     `)
     process.exit(0)
 }
 
 if (options.version) {
     console.log('v' + packageJson.version)
+    process.exit(0)
+}
+
+if (options.env) {
+    if (process.env.API_KEY) {
+        await config.set('api', process.env.API_KEY)
+        console.log(chalk.green('API key from dotenv has been set.'))
+    } else {
+        console.log(chalk.red('API key not found in dotenv.'))
+    }
     process.exit(0)
 }
 
@@ -64,9 +76,7 @@ if (options.api) {
         }
         process.exit(0)
     })()
-}
-
-if (options.prompt) {
+} else if (options.prompt) {
     weatherprompt()
 } else {
     if (argv.length === 0) {
