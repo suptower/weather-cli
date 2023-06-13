@@ -113,7 +113,7 @@ const promptMenu = async response => {
       console.log(chalk.magenta("Pressure Amount: " + chalk.cyan(response.current.pressure_mb + " mb")));
       break;
     case "forecast":
-      console.log(chalk.blue("Forecast:"));
+      console.log(chalk.blue("Forecast (yet to be implemented):"));
       break;
     default:
       console.log(chalk.red("Error: " + menu.value + " is not a valid option."));
