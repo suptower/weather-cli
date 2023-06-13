@@ -1,6 +1,6 @@
 {
   "name": "worldweather-cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A package to retrieve weather information directly from your terminal.",
   "exports": "./index.js",
   "type": "module",
