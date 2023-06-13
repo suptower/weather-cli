@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "test",
-    "release": "standard-version"
+    "release": "standard-version",
+    "lint": "prettier --check . && eslint .",
+    "prettier": "prettier --write ."
   },
   "bin": {
     "worldweather": "./index.js"
@@ -39,10 +41,12 @@
   "homepage": "https://github.com/suptower/worldweather-cli#readme",
   "devDependencies": {
     "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
+    "prettier": "^2.8.8",
     "standard-version": "^9.5.0"
   },
   "dependencies": {
