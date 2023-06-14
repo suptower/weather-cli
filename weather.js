@@ -113,7 +113,27 @@ const promptMenu = async response => {
       console.log(chalk.magenta("Pressure Amount: " + chalk.cyan(response.current.pressure_mb + " mb")));
       break;
     case "forecast":
-      console.log(chalk.blue("Forecast (yet to be implemented):"));
+      console.log(chalk.blue("Forecast:"));
+      console.log(chalk.bold.yellow("Forecast API currently supports only up to a maximum of 14 days. Depending on the location, the forecast data may only be available for a shorter period."));
+      const showForecast = await prompts({
+        type: "confirm",
+        name: "value",
+        message: "Do you wish to continue?",
+        initial: true,
+      });
+      if (showForecast.value) {
+        const days = await prompts({
+          type: "number",
+          name: "value",
+          message: "How many days do you wish to see (1-14)?",
+          initial: 1,
+          min: 1,
+          max: 14,
+        });
+
+      } else {
+        console.log(chalk.red("Forecast cancelled."));
+      }
       break;
     default:
       console.log(chalk.red("Error: " + menu.value + " is not a valid option."));
