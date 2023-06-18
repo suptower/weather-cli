@@ -9,6 +9,7 @@ const config = new Conf({ projectName: "weather-cli" });
 const API_KEY = config.get("api");
 
 const API_URL = "http://api.weatherapi.com/v1/current.json?key=" + API_KEY + "&q=";
+const API_URL_FORECAST = "http://api.weatherapi.com/v1/forecast.json?key=" + API_KEY + "&q=";
 
 export const weather = async location => {
   console.log();
@@ -104,7 +105,11 @@ const promptMenu = async response => {
       console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.current.last_updated) + "):"));
       console.log(chalk.magenta("Condition: " + chalk.cyan(response.current.condition.text)));
       console.log(chalk.magenta("Temperature: " + chalk.cyan(response.current.temp_c + "°C")));
-      console.log(chalk.magenta("Wind Speed | Direction: " + chalk.cyan(response.current.wind_kph + " km/h | " + response.current.wind_dir)));
+      console.log(
+        chalk.magenta(
+          "Wind Speed | Direction: " + chalk.cyan(response.current.wind_kph + " km/h | " + response.current.wind_dir),
+        ),
+      );
       console.log(chalk.magenta("Precipitation ammount: " + chalk.cyan(response.current.precip_mm + " mm")));
       console.log(chalk.magenta("Humidity: " + chalk.cyan(response.current.humidity + " %")));
       console.log(chalk.magenta("Cloud cover: " + chalk.cyan(response.current.cloud + " %")));
@@ -112,9 +117,13 @@ const promptMenu = async response => {
       console.log(chalk.magenta("Visibility Distance: " + chalk.cyan(response.current.vis_km + " km")));
       console.log(chalk.magenta("Pressure Amount: " + chalk.cyan(response.current.pressure_mb + " mb")));
       break;
-    case "forecast":
+    case "forecast": {
       console.log(chalk.blue("Forecast:"));
-      console.log(chalk.bold.yellow("Forecast API currently supports only up to a maximum of 14 days. Depending on the location, the forecast data may only be available for a shorter period."));
+      console.log(
+        chalk.bold.yellow(
+          "Forecast API currently supports only up to a maximum of 14 days. Depending on the location, the forecast data may only be available for a shorter period.",
+        ),
+      );
       const showForecast = await prompts({
         type: "confirm",
         name: "value",
@@ -130,11 +139,16 @@ const promptMenu = async response => {
           min: 1,
           max: 14,
         });
-
+        const forecast = await got(API_URL_FORECAST + response.location.name + "&days=" + days.value + "&aqi=no&alerts=no").json().then(response => {
+          console.log(chalk.blue("Forecast for " + chalk.cyan(response.location.name) + ":"));
+          console.log(chalk.yellow("Data has been fetched for " + chalk.cyan(response.forecast.forecastday.length) + " days."));
+          // Let user select a day
+        });
       } else {
         console.log(chalk.red("Forecast cancelled."));
       }
       break;
+    }
     default:
       console.log(chalk.red("Error: " + menu.value + " is not a valid option."));
       break;
