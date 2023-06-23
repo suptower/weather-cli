@@ -86,36 +86,13 @@ const promptMenu = async response => {
   });
   switch (menu.value) {
     case "location":
-      console.log(chalk.blue("Location information:"));
-      console.log(chalk.magenta("Name: " + chalk.cyan(response.location.name)));
-      console.log(chalk.magenta("Region: " + chalk.cyan(response.location.region)));
-      console.log(chalk.magenta("Country: " + chalk.cyan(response.location.country)));
-      console.log(chalk.magenta("Latitude: " + chalk.cyan(response.location.lat)));
-      console.log(chalk.magenta("Longitude: " + chalk.cyan(response.location.lon)));
-      console.log(chalk.magenta("Timezone: " + chalk.cyan(response.location.tz_id)));
-      console.log(chalk.magenta("Local time: " + chalk.cyan(response.location.localtime)));
+      printLocation(response);
       break;
     case "current":
-      console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.current.last_updated) + "):"));
-      console.log(chalk.magenta("Condition: " + chalk.cyan(response.current.condition.text)));
-      console.log(chalk.magenta("Temperature: " + chalk.cyan(response.current.temp_c + "°C")));
+      printCurrent(response);
       break;
     case "currentdetailed":
-      console.log(chalk.blue("Current condition (detailed):"));
-      console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.current.last_updated) + "):"));
-      console.log(chalk.magenta("Condition: " + chalk.cyan(response.current.condition.text)));
-      console.log(chalk.magenta("Temperature: " + chalk.cyan(response.current.temp_c + "°C")));
-      console.log(
-        chalk.magenta(
-          "Wind Speed | Direction: " + chalk.cyan(response.current.wind_kph + " km/h | " + response.current.wind_dir),
-        ),
-      );
-      console.log(chalk.magenta("Precipitation ammount: " + chalk.cyan(response.current.precip_mm + " mm")));
-      console.log(chalk.magenta("Humidity: " + chalk.cyan(response.current.humidity + " %")));
-      console.log(chalk.magenta("Cloud cover: " + chalk.cyan(response.current.cloud + " %")));
-      console.log(chalk.magenta("UV Index: " + chalk.cyan(response.current.uv)));
-      console.log(chalk.magenta("Visibility Distance: " + chalk.cyan(response.current.vis_km + " km")));
-      console.log(chalk.magenta("Pressure Amount: " + chalk.cyan(response.current.pressure_mb + " mb")));
+      printCurrentDetailed(response);
       break;
     case "forecast": {
       console.log(chalk.blue("Forecast:"));
@@ -139,10 +116,21 @@ const promptMenu = async response => {
           min: 1,
           max: 14,
         });
-        const forecast = await got(API_URL_FORECAST + response.location.name + "&days=" + days.value + "&aqi=no&alerts=no").json().then(response => {
+        await got(API_URL_FORECAST + response.location.name + "&days=" + days.value + "&aqi=no&alerts=no").json().then(async response => {
           console.log(chalk.blue("Forecast for " + chalk.cyan(response.location.name) + ":"));
           console.log(chalk.yellow("Data has been fetched for " + chalk.cyan(response.forecast.forecastday.length) + " days."));
           // Let user select a day
+          await prompts({
+            type: "select",
+            name: "value",
+            message: "Select a day",
+            choices: response.forecast.forecastday.map(day => {
+              return { title: day.date, value: day };
+            })
+          }).then(day => {
+            console.log(chalk.blue("You selected " + chalk.cyan(day.value.date) + "."));
+            // printCurrentDetailed(response.forecast.forecastday[day.value]);
+          });
         });
       } else {
         console.log(chalk.red("Forecast cancelled."));
@@ -153,4 +141,39 @@ const promptMenu = async response => {
       console.log(chalk.red("Error: " + menu.value + " is not a valid option."));
       break;
   }
+};
+
+const printLocation = response => {
+  console.log(chalk.blue("Location information:"));
+  console.log(chalk.magenta("Name: " + chalk.cyan(response.location.name)));
+  console.log(chalk.magenta("Region: " + chalk.cyan(response.location.region)));
+  console.log(chalk.magenta("Country: " + chalk.cyan(response.location.country)));
+  console.log(chalk.magenta("Latitude: " + chalk.cyan(response.location.lat)));
+  console.log(chalk.magenta("Longitude: " + chalk.cyan(response.location.lon)));
+  console.log(chalk.magenta("Timezone: " + chalk.cyan(response.location.tz_id)));
+  console.log(chalk.magenta("Local time: " + chalk.cyan(response.location.localtime)));
+};
+
+const printCurrent = response => {
+  console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.current.last_updated) + "):"));
+  console.log(chalk.magenta("Condition: " + chalk.cyan(response.current.condition.text)));
+  console.log(chalk.magenta("Temperature: " + chalk.cyan(response.current.temp_c + "°C")));
+};
+
+const printCurrentDetailed = response => {
+  console.log(chalk.blue("Current condition (detailed):"));
+  console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.current.last_updated) + "):"));
+  console.log(chalk.magenta("Condition: " + chalk.cyan(response.current.condition.text)));
+  console.log(chalk.magenta("Temperature: " + chalk.cyan(response.current.temp_c + "°C")));
+  console.log(
+    chalk.magenta(
+      "Wind Speed | Direction: " + chalk.cyan(response.current.wind_kph + " km/h | " + response.current.wind_dir),
+    ),
+  );
+  console.log(chalk.magenta("Precipitation ammount: " + chalk.cyan(response.current.precip_mm + " mm")));
+  console.log(chalk.magenta("Humidity: " + chalk.cyan(response.current.humidity + " %")));
+  console.log(chalk.magenta("Cloud cover: " + chalk.cyan(response.current.cloud + " %")));
+  console.log(chalk.magenta("UV Index: " + chalk.cyan(response.current.uv)));
+  console.log(chalk.magenta("Visibility Distance: " + chalk.cyan(response.current.vis_km + " km")));
+  console.log(chalk.magenta("Pressure Amount: " + chalk.cyan(response.current.pressure_mb + " mb")));
 };
