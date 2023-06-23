@@ -31,6 +31,7 @@ if (options.help) {
     Usage: 
         $ weather [options]
         $ weather [location]
+        $ weather [options] [location]
 
     Options:
         -h, --help          output usage information
@@ -43,6 +44,8 @@ if (options.help) {
         $ weather Munich
         $ weather --api
         $ weather -v
+        $ weather -p
+        $weather -p Munich
     `);
   process.exit(0);
 }
@@ -78,7 +81,11 @@ if (options.api) {
     process.exit(0);
   })();
 } else if (options.prompt) {
-  weatherprompt();
+  if (argv.length > 1) {
+    weatherprompt(argv.join(" ").slice(3));
+  } else {
+    weatherprompt();
+  }
 } else {
   if (argv.length === 0) {
     console.log(chalk.red("Error: No location specified."));

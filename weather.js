@@ -38,12 +38,17 @@ export const weather = async location => {
     });
 };
 
-export const weatherprompt = async () => {
-  const response = await prompts({
-    type: "text",
-    name: "location",
-    message: "Enter a location",
-  });
+export const weatherprompt = async location => {
+  let response;
+  if (location) {
+    response = location;
+  } else {
+    response = await prompts({
+      type: "text",
+      name: "location",
+      message: "Enter a location",
+    });
+  }
   if (response.location) {
     const loading = ora({
       text: "Loading weather for " + chalk.blue(response.location) + "...",
@@ -51,6 +56,29 @@ export const weatherprompt = async () => {
     });
     loading.start();
     const requestURL = API_URL + response.location + "&aqi=no";
+    await got(requestURL)
+      .json()
+      .then(response => {
+        loading.succeed(
+          "Weather information for " +
+            chalk.blue(response.location.name) +
+            " (local time: " +
+            chalk.cyan(response.location.localtime) +
+            " ) has been loaded.",
+        );
+        promptMenu(response);
+      })
+      .catch(error => {
+        const reason = JSON.parse(error.response.body).error.message;
+        loading.fail(chalk.red("Error: " + reason));
+      });
+  } else if (location) {
+    const loading = ora({
+      text: "Loading weather for " + chalk.blue(location) + "...",
+      spinner: "earth",
+    });
+    loading.start();
+    const requestURL = API_URL + location + "&aqi=no";
     await got(requestURL)
       .json()
       .then(response => {
