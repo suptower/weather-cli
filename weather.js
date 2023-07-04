@@ -144,24 +144,32 @@ const promptMenu = async response => {
           min: 1,
           max: 14,
         });
-        await got(API_URL_FORECAST + response.location.name + "&days=" + days.value + "&aqi=no&alerts=no").json().then(async response => {
-          console.log(chalk.blue("Forecast for " + chalk.cyan(response.location.name) + ":"));
-          console.log(chalk.yellow("Data has been fetched for " + chalk.cyan(response.forecast.forecastday.length) + " days."));
-          // Let user select a day
-          await prompts({
-            type: "select",
-            name: "value",
-            message: "Select a day",
-            choices: response.forecast.forecastday.map(day => {
-              return { title: day.date, value: day };
-            })
-          }).then(day => {
-            console.log(chalk.blue("You selected " + chalk.cyan(day.value.date) + ". Data will be shown for " + chalk.cyan("12 PM.")));
-            // console.log(day.value.hour[12]);
-            // console.log(response.forecast.forecastday[day.date]);
-            printCurrentDetailedForecast(response.current, day.value.hour[12]);
+        await got(API_URL_FORECAST + response.location.name + "&days=" + days.value + "&aqi=no&alerts=no")
+          .json()
+          .then(async response => {
+            console.log(chalk.blue("Forecast for " + chalk.cyan(response.location.name) + ":"));
+            console.log(
+              chalk.yellow("Data has been fetched for " + chalk.cyan(response.forecast.forecastday.length) + " days."),
+            );
+            // Let user select a day
+            await prompts({
+              type: "select",
+              name: "value",
+              message: "Select a day",
+              choices: response.forecast.forecastday.map(day => {
+                return { title: day.date, value: day };
+              }),
+            }).then(day => {
+              console.log(
+                chalk.blue(
+                  "You selected " + chalk.cyan(day.value.date) + ". Data will be shown for " + chalk.cyan("12 PM."),
+                ),
+              );
+              // console.log(day.value.hour[12]);
+              // console.log(response.forecast.forecastday[day.date]);
+              printCurrentDetailedForecast(response.current, day.value.hour[12]);
+            });
           });
-        });
       } else {
         console.log(chalk.red("Forecast cancelled."));
       }
@@ -199,9 +207,7 @@ const printCurrentDetailed = response => {
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
   console.log(chalk.magenta("Temperature: " + chalk.cyan(response.temp_c + "°C")));
   console.log(
-    chalk.magenta(
-      "Wind Speed | Direction: " + chalk.cyan(response.wind_kph + " km/h | " + response.wind_dir),
-    ),
+    chalk.magenta("Wind Speed | Direction: " + chalk.cyan(response.wind_kph + " km/h | " + response.wind_dir)),
   );
   console.log(chalk.magenta("Precipitation ammount: " + chalk.cyan(response.precip_mm + " mm")));
   console.log(chalk.magenta("Humidity: " + chalk.cyan(response.humidity + " %")));
@@ -211,15 +217,13 @@ const printCurrentDetailed = response => {
   console.log(chalk.magenta("Pressure Amount: " + chalk.cyan(response.pressure_mb + " mb")));
 };
 
-const printCurrentDetailedForecast =  (current, response) => {
+const printCurrentDetailedForecast = (current, response) => {
   console.log(chalk.blue("Current condition (detailed):"));
   console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(current.last_updated) + "):"));
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
   console.log(chalk.magenta("Temperature: " + chalk.cyan(response.temp_c + "°C")));
   console.log(
-    chalk.magenta(
-      "Wind Speed | Direction: " + chalk.cyan(response.wind_kph + " km/h | " + response.wind_dir),
-    ),
+    chalk.magenta("Wind Speed | Direction: " + chalk.cyan(response.wind_kph + " km/h | " + response.wind_dir)),
   );
   console.log(chalk.magenta("Precipitation ammount: " + chalk.cyan(response.precip_mm + " mm")));
   console.log(chalk.magenta("Humidity: " + chalk.cyan(response.humidity + " %")));
