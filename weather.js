@@ -209,9 +209,7 @@ const printCurrentDetailed = response => {
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
   console.log(chalk.magenta("Temperature: " + chalk.cyan(response.temp_c + "°C")));
   console.log(
-    chalk.magenta(
-      "Wind Speed | Direction: " + chalk.cyan(response.wind_kph + " km/h | " + response.wind_dir),
-    ),
+    chalk.magenta("Wind Speed | Direction: " + chalk.cyan(response.wind_kph + " km/h | " + response.wind_dir)),
   );
   console.log(chalk.magenta("Precipitation ammount: " + chalk.cyan(response.precip_mm + " mm")));
   console.log(chalk.magenta("Humidity: " + chalk.cyan(response.humidity + " %")));
@@ -227,9 +225,7 @@ const printCurrentDetailedForecast =  async (current, response, callback, days) 
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
   console.log(chalk.magenta("Temperature: " + chalk.cyan(response.temp_c + "°C")));
   console.log(
-    chalk.magenta(
-      "Wind Speed | Direction: " + chalk.cyan(response.wind_kph + " km/h | " + response.wind_dir),
-    ),
+    chalk.magenta("Wind Speed | Direction: " + chalk.cyan(response.wind_kph + " km/h | " + response.wind_dir)),
   );
   console.log(chalk.magenta("Precipitation ammount: " + chalk.cyan(response.precip_mm + " mm")));
   console.log(chalk.magenta("Humidity: " + chalk.cyan(response.humidity + " %")));
