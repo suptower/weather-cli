@@ -110,6 +110,7 @@ const promptMenu = async response => {
       { title: "Current condition", value: "current" },
       { title: "Current condition (detailed)", value: "currentdetailed" },
       { title: "Forecast", value: "forecast" },
+      { title: "Exit", value: "exit"}
     ],
   });
   switch (menu.value) {
@@ -148,6 +149,10 @@ const promptMenu = async response => {
       } else {
         console.log(chalk.red("Forecast cancelled."));
       }
+      break;
+    }
+    case "exit": {
+      console.log(chalk.red("Exiting..."));
       break;
     }
     default:
