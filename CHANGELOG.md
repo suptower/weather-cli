@@ -1,3 +1,53 @@
+# Change Log
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/suptower/worldweather-cli/compare/v0.0.3...v0.2.0) (2023-07-07)
+
+
+### Bug Fixes
+
+* linting + implementing forecast ([ea19b98](https://github.com/suptower/worldweather-cli/commit/ea19b98))
+
+
+### Features
+
+* added exiting option ([9c13086](https://github.com/suptower/worldweather-cli/commit/9c13086))
+* changed fast and prompt modes ([a03476c](https://github.com/suptower/worldweather-cli/commit/a03476c))
+* user can go back to previous prompt ([f7aaee5](https://github.com/suptower/worldweather-cli/commit/f7aaee5))
+* **cli:** added fast prompt option ([172a978](https://github.com/suptower/worldweather-cli/commit/172a978))
+* **forecast:** added day selection ([641dd2d](https://github.com/suptower/worldweather-cli/commit/641dd2d))
+* **forecast:** go back to day selection ([ca0946f](https://github.com/suptower/worldweather-cli/commit/ca0946f))
+* **forecast:** show detailed current on forecast ([bbd52a9](https://github.com/suptower/worldweather-cli/commit/bbd52a9))
+* added simple forecast menu ([60c5343](https://github.com/suptower/worldweather-cli/commit/60c5343))
+* **git:** added issue templates ([8eaab22](https://github.com/suptower/worldweather-cli/commit/8eaab22))
+
+
+
+<a name="0.1.0"></a>
+# [0.1.0](https://github.com/suptower/worldweather-cli/compare/v0.0.3...v0.1.0) (2023-07-07)
+
+
+### Bug Fixes
+
+* linting + implementing forecast ([ea19b98](https://github.com/suptower/worldweather-cli/commit/ea19b98))
+
+
+### Features
+
+* added exiting option ([9c13086](https://github.com/suptower/worldweather-cli/commit/9c13086))
+* changed fast and prompt modes ([a03476c](https://github.com/suptower/worldweather-cli/commit/a03476c))
+* user can go back to previous prompt ([f7aaee5](https://github.com/suptower/worldweather-cli/commit/f7aaee5))
+* **cli:** added fast prompt option ([172a978](https://github.com/suptower/worldweather-cli/commit/172a978))
+* **forecast:** added day selection ([641dd2d](https://github.com/suptower/worldweather-cli/commit/641dd2d))
+* **forecast:** go back to day selection ([ca0946f](https://github.com/suptower/worldweather-cli/commit/ca0946f))
+* **forecast:** show detailed current on forecast ([bbd52a9](https://github.com/suptower/worldweather-cli/commit/bbd52a9))
+* added simple forecast menu ([60c5343](https://github.com/suptower/worldweather-cli/commit/60c5343))
+* **git:** added issue templates ([8eaab22](https://github.com/suptower/worldweather-cli/commit/8eaab22))
+
+
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
