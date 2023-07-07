@@ -22,7 +22,7 @@ const options = getopts(argv, {
     version: "v",
     api: "a",
     env: "e",
-    prompt: "p",
+    fast: "f",
   },
 });
 
@@ -38,14 +38,13 @@ if (options.help) {
         -v, --version       output the version number
         -a, --api           set api key
         -e, --env           set api key from environment variable API_KEY
-        -p, --prompt        prompt menu for detailed weather
+        -f , --fast         fast mode, no prompt, locations as arg
 
     Examples:
         $ weather Munich
         $ weather --api
         $ weather -v
-        $ weather -p
-        $weather -p Munich
+        $ weather -f Munich
     `);
   process.exit(0);
 }
@@ -80,17 +79,12 @@ if (options.api) {
     }
     process.exit(0);
   })();
-} else if (options.prompt) {
-  if (argv.length > 1) {
-    weatherprompt(argv.join(" ").slice(3));
+} else if (options.fast) {
+  weather(argv.join(" "));
+} else {
+  if (argv.length > 0) {
+    weatherprompt(argv.join(" "));
   } else {
     weatherprompt();
   }
-} else {
-  if (argv.length === 0) {
-    console.log(chalk.red("Error: No location specified."));
-    process.exit(1);
-  }
-  const location = argv.join(" ");
-  weather(location);
 }
