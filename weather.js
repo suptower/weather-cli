@@ -114,13 +114,13 @@ const promptMenu = async response => {
   });
   switch (menu.value) {
     case "location":
-      printLocation(response.location);
+      printLocation(response.location, response);
       break;
     case "current":
-      printCurrent(response.current);
+      printCurrent(response.current, response);
       break;
     case "currentdetailed":
-      printCurrentDetailed(response.current);
+      printCurrentDetailed(response.current, response);
       break;
     case "forecast": {
       console.log(chalk.blue("Forecast:"));
@@ -184,7 +184,7 @@ const getForecast = async (response, days) => {
 };
 
 // Takes response.location
-const printLocation = response => {
+const printLocation = async (response, callback) => {
   console.log(chalk.blue("Location information:"));
   console.log(chalk.magenta("Name: " + chalk.cyan(response.name)));
   console.log(chalk.magenta("Region: " + chalk.cyan(response.region)));
@@ -193,17 +193,47 @@ const printLocation = response => {
   console.log(chalk.magenta("Longitude: " + chalk.cyan(response.lon)));
   console.log(chalk.magenta("Timezone: " + chalk.cyan(response.tz_id)));
   console.log(chalk.magenta("Local time: " + chalk.cyan(response.localtime)));
+  // Prompt user to go back to location screen
+    await prompts({
+      type: "toggle",
+      name: "value",
+      message: "Go back to option selection?",
+      initial: true,
+      active: "yes",
+      inactive: "no",
+    }).then(async back => {
+      if (back.value) {
+        promptMenu(callback)
+      } else {
+        console.log(chalk.red("Exit."));
+      }
+    });
 };
 
 // Takes response.current
-const printCurrent = response => {
+const printCurrent = async (response, callback) => {
   console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.last_updated) + "):"));
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
   console.log(chalk.magenta("Temperature: " + chalk.cyan(response.temp_c + "°C")));
+  // Prompt user to go back to location screen
+    await prompts({
+      type: "toggle",
+      name: "value",
+      message: "Go back to option selection?",
+      initial: true,
+      active: "yes",
+      inactive: "no",
+    }).then(async back => {
+      if (back.value) {
+        promptMenu(callback)
+      } else {
+        console.log(chalk.red("Exit."));
+      }
+    });
 };
 
 // Takes response.current
-const printCurrentDetailed = response => {
+const printCurrentDetailed = async (response, callback) => {
   console.log(chalk.blue("Current condition (detailed):"));
   console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.last_updated) + "):"));
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
@@ -217,6 +247,21 @@ const printCurrentDetailed = response => {
   console.log(chalk.magenta("UV Index: " + chalk.cyan(response.uv)));
   console.log(chalk.magenta("Visibility Distance: " + chalk.cyan(response.vis_km + " km")));
   console.log(chalk.magenta("Pressure Amount: " + chalk.cyan(response.pressure_mb + " mb")));
+  // Prompt user to go back to location screen
+  await prompts({
+    type: "toggle",
+    name: "value",
+    message: "Go back to option selection?",
+    initial: true,
+    active: "yes",
+    inactive: "no",
+  }).then(async back => {
+    if (back.value) {
+      promptMenu(callback)
+    } else {
+      console.log(chalk.red("Exit."));
+    }
+  });
 };
 
 const printCurrentDetailedForecast =  async (current, response, callback, days) => {
@@ -246,7 +291,7 @@ const printCurrentDetailedForecast =  async (current, response, callback, days) 
     if (back.value) {
       getForecast(callback, days);
     } else {
-      console.log(chalk.red("Forecast cancelled."));
+      promptMenu(callback)
     }
   });
 };
