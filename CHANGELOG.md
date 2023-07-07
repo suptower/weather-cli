@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/suptower/worldweather-cli/compare/v0.2.0...v0.3.0) (2023-07-07)
+
+
+### Bug Fixes
+
+* **dependencies:** updated deps ([154af7b](https://github.com/suptower/worldweather-cli/commit/154af7b))
+
+
+### Features
+
+* **readme:** added gif ([39334ea](https://github.com/suptower/worldweather-cli/commit/39334ea))
+* adapted README ([6c0633d](https://github.com/suptower/worldweather-cli/commit/6c0633d))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/suptower/worldweather-cli/compare/v0.0.3...v0.2.0) (2023-07-07)
 
