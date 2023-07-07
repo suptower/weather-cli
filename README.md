@@ -2,6 +2,8 @@
 
 Retrieve weather information directly from your terminal.
 
+![terminal example usage](terminal.gif)
+
 # Install
 via `npm`
 ```
