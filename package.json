@@ -8,7 +8,7 @@
     "test": "test",
     "release": "standard-version",
     "lint": "prettier --check . && eslint .",
-    "prettier": "prettier --write ."
+    "lint:fix": "prettier --write . && eslint . --fix"
   },
   "bin": {
     "weather": "./index.js"

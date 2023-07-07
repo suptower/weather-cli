@@ -29,20 +29,23 @@ const options = getopts(argv, {
 if (options.help) {
   console.log(`
     Usage: 
-        $ worldweather [options]
-        $ worldweather [location]
+        $ weather [options]
+        $ weather [location]
+        $ weather [options] [location]
 
     Options:
         -h, --help          output usage information
         -v, --version       output the version number
         -a, --api           set api key
-        -e, --env           set api key from environment variable
+        -e, --env           set api key from environment variable API_KEY
         -p, --prompt        prompt menu for detailed weather
 
     Examples:
-        $ worldweather Munich
-        $ worldweather --api
-        $ worldweather -v
+        $ weather Munich
+        $ weather --api
+        $ weather -v
+        $ weather -p
+        $weather -p Munich
     `);
   process.exit(0);
 }
@@ -78,7 +81,11 @@ if (options.api) {
     process.exit(0);
   })();
 } else if (options.prompt) {
-  weatherprompt();
+  if (argv.length > 1) {
+    weatherprompt(argv.join(" ").slice(3));
+  } else {
+    weatherprompt();
+  }
 } else {
   if (argv.length === 0) {
     console.log(chalk.red("Error: No location specified."));
