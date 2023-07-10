@@ -80,7 +80,11 @@ if (options.api) {
     process.exit(0);
   })();
 } else if (options.fast) {
-  weather(argv.join(" "));
+  if (argv.length > 1) {
+    weather(argv.join(" "));
+  } else {
+    console.log(chalk.red("You need to specify a location."));
+  }
 } else {
   if (argv.length > 0) {
     weatherprompt(argv.join(" "));
