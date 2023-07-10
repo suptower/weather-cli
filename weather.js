@@ -102,11 +102,13 @@ export const weatherprompt = async location => {
 };
 
 const promptMenu = async response => {
-  console.log("Weather information for " +
-  chalk.blue(response.location.name) +
-  " (local time: " +
-  chalk.cyan(response.location.localtime) +
-  ") has been loaded.");
+  console.log(
+    "Weather information for " +
+      chalk.blue(response.location.name) +
+      " (local time: " +
+      chalk.cyan(response.location.localtime) +
+      ") has been loaded.",
+  );
   const menu = await prompts({
     type: "select",
     name: "value",
