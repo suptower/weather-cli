@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/suptower/worldweather-cli/compare/v0.3.1...v0.4.0) (2023-07-10)
+
+
+### Bug Fixes
+
+* **args:** :bug: fix fast mode error message ([b90b01b](https://github.com/suptower/worldweather-cli/commit/b90b01b))
+
+
+### Features
+
+* **args:** :sparkles: added info arg ([72a36dd](https://github.com/suptower/worldweather-cli/commit/72a36dd))
+* **git:** :memo: added `CONTRIBUTING.md` ([d3c6df7](https://github.com/suptower/worldweather-cli/commit/d3c6df7))
+* **git:** :memo: added `PULL_REQUEST_TEMPLATE.md` ([5747256](https://github.com/suptower/worldweather-cli/commit/5747256))
+* **package:** :sparkles: added autodate script ([181e1e0](https://github.com/suptower/worldweather-cli/commit/181e1e0))
+
+
+
 <a name="0.3.1"></a>
 ## [0.3.1](https://github.com/suptower/worldweather-cli/compare/v0.3.0...v0.3.1) (2023-07-07)
 
