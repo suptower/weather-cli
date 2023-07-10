@@ -1,65 +1,67 @@
 {
-  "name": "@suptower/weather-cli",
-  "version": "0.3.1",
-  "description": "A package to retrieve weather information directly from your terminal.",
-  "exports": "./index.js",
-  "type": "module",
-  "scripts": {
-    "test": "test",
-    "release": "standard-version",
-    "lint": "prettier --check . && eslint .",
-    "lint:fix": "prettier --write . && eslint . --fix"
-  },
-  "bin": {
-    "weather": "./index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/suptower/worldweather-cli.git"
-  },
-  "keywords": [
-    "node",
-    "nodejs",
-    "weather",
-    "weatherapi",
-    "cli",
-    "terminal",
-    "javascript",
-    "js",
-    "npm",
-    "npm-package",
-    "climate",
-    "forecast",
-    "open-source",
-    "api"
-  ],
-  "author": "suptower",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/suptower/worldweather-cli/issues"
-  },
-  "homepage": "https://github.com/suptower/worldweather-cli#readme",
-  "devDependencies": {
-    "eslint": "^8.42.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-node": "^1.0.0",
-    "eslint-plugin-promise": "^6.1.1",
-    "prettier": "^2.8.8",
-    "standard-version": "^9.5.0"
-  },
-  "dependencies": {
-    "chalk": "^5.2.0",
-    "conf": "^11.0.1",
-    "dotenv": "^16.1.4",
-    "getopts": "^2.3.0",
-    "got": "^13.0.0",
-    "mem": "^9.0.2",
-    "ora": "^6.3.1",
-    "prompts": "^2.4.2"
-  },
-  "engines": {
-    "node": ">=16"
-  }
+	"name": "@suptower/weather-cli",
+	"version": "0.3.1",
+	"date": "Updated on 10th of July 2023.",
+	"description": "A package to retrieve weather information directly from your terminal.",
+	"exports": "./index.js",
+	"type": "module",
+	"scripts": {
+		"test": "test",
+		"release": "standard-version",
+		"lint": "prettier --check . && eslint .",
+		"lint:fix": "prettier --write . && eslint . --fix"
+	},
+	"bin": {
+		"weather": "./index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/suptower/worldweather-cli.git"
+	},
+	"keywords": [
+		"node",
+		"nodejs",
+		"weather",
+		"weatherapi",
+		"cli",
+		"terminal",
+		"javascript",
+		"js",
+		"npm",
+		"npm-package",
+		"climate",
+		"forecast",
+		"open-source",
+		"api"
+	],
+	"author": "suptower",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/suptower/worldweather-cli/issues"
+	},
+	"homepage": "https://github.com/suptower/worldweather-cli#readme",
+	"devDependencies": {
+		"eslint": "^8.42.0",
+		"eslint-config-prettier": "^8.8.0",
+		"eslint-config-standard": "^17.1.0",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-node": "^1.0.0",
+		"eslint-plugin-promise": "^6.1.1",
+		"prettier": "^2.8.8",
+		"standard-version": "^4.4.0"
+	},
+	"dependencies": {
+		"chalk": "^5.2.0",
+		"conf": "^11.0.1",
+		"dotenv": "^16.1.4",
+		"getopts": "^2.3.0",
+		"got": "^13.0.0",
+		"gradient-string": "^2.0.2",
+		"mem": "^9.0.2",
+		"ora": "^6.3.1",
+		"prompts": "^2.4.2"
+	},
+	"engines": {
+		"node": ">=16"
+	}
 }

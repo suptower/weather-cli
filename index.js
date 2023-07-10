@@ -6,6 +6,7 @@ import prompts from "prompts";
 import { weather, weatherprompt } from "./weather.js";
 import getopts from "getopts";
 import { readFileSync } from "fs";
+import gradient from "gradient-string";
 
 const packageJson = JSON.parse(readFileSync("./package.json"));
 
@@ -23,6 +24,7 @@ const options = getopts(argv, {
     api: "a",
     env: "e",
     fast: "f",
+    info: "i",
   },
 });
 
@@ -39,12 +41,15 @@ if (options.help) {
         -a, --api           set api key
         -e, --env           set api key from environment variable API_KEY
         -f , --fast         fast mode, no prompt, locations as arg
+        -i, --info          show project related info
 
     Examples:
         $ weather Munich
         $ weather --api
         $ weather -v
+        $ weather --info
         $ weather -f Munich
+        $ weather
     `);
   process.exit(0);
 }
@@ -61,6 +66,16 @@ if (options.env) {
   } else {
     console.log(chalk.red("API key not found in dotenv."));
   }
+  process.exit(0);
+}
+
+if (options.info) {                                
+  console.log(gradient.teen("Weather CLI"));
+  console.log(gradient.passion("Version: " ) + packageJson.version);
+  console.log(gradient.retro("Author: " ) + packageJson.author);
+  console.log(gradient.mind("Repository: " ) + packageJson.repository.url);
+  console.log(gradient.cristal("License: " ) + packageJson.license);
+  console.log(gradient.fruit(packageJson.date));
   process.exit(0);
 }
 

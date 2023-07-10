@@ -1,5 +1,6 @@
 {
   "conventionalCommits.scopes": [
-    "args"
+    "args",
+    "package"
   ]
 }
