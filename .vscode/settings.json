@@ -2,6 +2,7 @@
   "conventionalCommits.scopes": [
     "args",
     "package",
-    "git"
+    "git",
+    "deps"
   ]
 }
