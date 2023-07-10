@@ -6,7 +6,6 @@
 	"exports": "./index.js",
 	"type": "module",
 	"scripts": {
-		"test": "test",
 		"release": "standard-version",
 		"lint": "prettier --check . && eslint .",
 		"lint:fix": "prettier --write . && eslint . --fix"
