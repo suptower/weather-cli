@@ -23,12 +23,15 @@ npm install -g @suptower/weather-cli
         -a, --api           set api key
         -e, --env           set api key from environment variable API_KEY
         -f , --fast         fast mode, no prompt, locations as arg
+        -i, --info          show project related info
 
     Examples:
         $ weather Munich
         $ weather --api
         $ weather -v
+        $ weather --info
         $ weather -f Munich
+        $ weather
 ```
 
 # API Key
