@@ -69,12 +69,12 @@ if (options.env) {
   process.exit(0);
 }
 
-if (options.info) {                                
+if (options.info) {
   console.log(gradient.teen("Weather CLI"));
-  console.log(gradient.passion("Version: " ) + packageJson.version);
-  console.log(gradient.retro("Author: " ) + packageJson.author);
-  console.log(gradient.mind("Repository: " ) + packageJson.repository.url);
-  console.log(gradient.cristal("License: " ) + packageJson.license);
+  console.log(gradient.passion("Version: ") + packageJson.version);
+  console.log(gradient.retro("Author: ") + packageJson.author);
+  console.log(gradient.mind("Repository: ") + packageJson.repository.url);
+  console.log(gradient.cristal("License: ") + packageJson.license);
   console.log(gradient.fruit(packageJson.date));
   process.exit(0);
 }

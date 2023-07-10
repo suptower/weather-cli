@@ -125,3 +125,16 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# github files
+.github
+CONTRIBUTING.md
+README.md
+CHANGELOG.md
+
+# vscode files
+.vscode
+
+# npm files
+package-lock.json
+package.json
