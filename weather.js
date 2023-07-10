@@ -60,11 +60,11 @@ export const weatherprompt = async location => {
       .json()
       .then(response => {
         loading.succeed(
-          "Weather information for " +
+          " Weather information for " +
             chalk.blue(response.location.name) +
             " (local time: " +
             chalk.cyan(response.location.localtime) +
-            " ) has been loaded.",
+            ") has been loaded.",
         );
         promptMenu(response);
       })
@@ -83,12 +83,13 @@ export const weatherprompt = async location => {
       .json()
       .then(response => {
         loading.succeed(
-          "Weather information for " +
+          " Weather information for " +
             chalk.blue(response.location.name) +
             " (local time: " +
             chalk.cyan(response.location.localtime) +
-            " ) has been loaded.",
+            ") has been loaded.",
         );
+        console.clear();
         promptMenu(response);
       })
       .catch(error => {
@@ -101,6 +102,11 @@ export const weatherprompt = async location => {
 };
 
 const promptMenu = async response => {
+  console.log("Weather information for " +
+  chalk.blue(response.location.name) +
+  " (local time: " +
+  chalk.cyan(response.location.localtime) +
+  ") has been loaded.");
   const menu = await prompts({
     type: "select",
     name: "value",
@@ -162,6 +168,7 @@ const promptMenu = async response => {
 };
 
 const getForecast = async (response, days) => {
+  console.clear();
   const loading = ora({
     text: "Loading forecast for " + chalk.blue(response.location.name) + "...",
     spinner: "earth",
@@ -214,6 +221,7 @@ const printLocation = async (response, callback) => {
     inactive: "no",
   }).then(async back => {
     if (back.value) {
+      console.clear();
       promptMenu(callback);
     } else {
       console.log(chalk.red("Exit."));
@@ -236,6 +244,7 @@ const printCurrent = async (response, callback) => {
     inactive: "no",
   }).then(async back => {
     if (back.value) {
+      console.clear();
       promptMenu(callback);
     } else {
       console.log(chalk.red("Exit."));
@@ -268,6 +277,7 @@ const printCurrentDetailed = async (response, callback) => {
     inactive: "no",
   }).then(async back => {
     if (back.value) {
+      console.clear();
       promptMenu(callback);
     } else {
       console.log(chalk.red("Exit."));
@@ -300,6 +310,7 @@ const printCurrentDetailedForecast = async (current, response, callback, days) =
     inactive: "no",
   }).then(async back => {
     if (back.value) {
+      console.clear();
       getForecast(callback, days);
     } else {
       promptMenu(callback);

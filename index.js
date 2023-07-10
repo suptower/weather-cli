@@ -29,7 +29,8 @@ const options = getopts(argv, {
 });
 
 if (options.help) {
-  console.log(`
+  console.clear();
+  console.log(gradient.morning(`
     Usage: 
         $ weather [options]
         $ weather [location]
@@ -50,12 +51,12 @@ if (options.help) {
         $ weather --info
         $ weather -f Munich
         $ weather
-    `);
+    `));
   process.exit(0);
 }
 
 if (options.version) {
-  console.log("v" + packageJson.version);
+  console.log(chalk.green("v" + packageJson.version));
   process.exit(0);
 }
 
@@ -70,6 +71,7 @@ if (options.env) {
 }
 
 if (options.info) {
+  console.clear();
   console.log(gradient.teen("Weather CLI"));
   console.log(gradient.passion("Version: ") + packageJson.version);
   console.log(gradient.retro("Author: ") + packageJson.author);
@@ -95,12 +97,14 @@ if (options.api) {
     process.exit(0);
   })();
 } else if (options.fast) {
+  console.clear();
   if (argv.length > 1) {
     weather(argv.join(" "));
   } else {
     console.log(chalk.red("You need to specify a location."));
   }
 } else {
+  console.clear();
   if (argv.length > 0) {
     weatherprompt(argv.join(" "));
   } else {

@@ -3,6 +3,7 @@
     "args",
     "package",
     "git",
-    "deps"
+    "deps",
+    "ux"
   ]
 }
