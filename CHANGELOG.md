@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.2](https://github.com/suptower/worldweather-cli/compare/v0.4.1...v0.4.2) (2023-07-10)
+
+
+### Features
+
+* **ux:** :art: added console clears ([16bc590](https://github.com/suptower/worldweather-cli/commit/16bc59014d481c240d4433dc6ef8ccb95351aea7))
+
 ### [0.4.1](https://github.com/suptower/worldweather-cli/compare/v0.4.0...v0.4.1) (2023-07-10)
 
 
