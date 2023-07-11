@@ -1,16 +1,28 @@
+// persist config
 import Conf from "conf";
+
+// http requests
 import got from "got";
+
+// terminal styling
 import chalk from "chalk";
+
+// user input
 import prompts from "prompts";
+
+// spinners
 import ora from "ora";
 
 const config = new Conf({ projectName: "weather-cli" });
 
+// get API key from config
 const API_KEY = config.get("api");
 
+// set API URL
 const API_URL = "http://api.weatherapi.com/v1/current.json?key=" + API_KEY + "&q=";
 const API_URL_FORECAST = "http://api.weatherapi.com/v1/forecast.json?key=" + API_KEY + "&q=";
 
+// fast mode
 export const weather = async location => {
   console.log();
   const loading = ora({
@@ -38,6 +50,11 @@ export const weather = async location => {
     });
 };
 
+/*  interactive mode
+    prompts user for location
+    then lets user choose from a menu
+    to display location information, current condition, forecast, etc.
+*/
 export const weatherprompt = async location => {
   let response;
   if (location) {
@@ -101,6 +118,8 @@ export const weatherprompt = async location => {
   }
 };
 
+
+// prompt menu to select wanted information
 const promptMenu = async response => {
   console.log(
     "Weather information for " +
@@ -169,6 +188,7 @@ const promptMenu = async response => {
   }
 };
 
+// get forecast day to display
 const getForecast = async (response, days) => {
   console.clear();
   const loading = ora({
@@ -196,8 +216,6 @@ const getForecast = async (response, days) => {
         console.log(
           chalk.blue("You selected " + chalk.cyan(day.value.date) + ". Data will be shown for " + chalk.cyan("12 PM.")),
         );
-        // console.log(day.value.hour[12]);
-        // console.log(response.forecast.forecastday[day.date]);
         printCurrentDetailedForecast(response.current, day.value.hour[12], response, days);
       });
     });
@@ -287,6 +305,7 @@ const printCurrentDetailed = async (response, callback) => {
   });
 };
 
+// New method for printing current detailed forecast
 const printCurrentDetailedForecast = async (current, response, callback, days) => {
   console.log(chalk.blue("Current condition (detailed):"));
   console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(current.last_updated) + "):"));
