@@ -118,7 +118,6 @@ export const weatherprompt = async location => {
   }
 };
 
-
 // prompt menu to select wanted information
 const promptMenu = async response => {
   console.log(
