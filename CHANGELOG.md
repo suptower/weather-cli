@@ -1,6 +1,13 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [0.4.3](https://github.com/suptower/worldweather-cli/compare/v0.4.2...v0.4.3) (2023-07-11)
+
+
+### Features
+
+* **deps:** :arrow_up: use `commit-and-tag-version` ([e5c0421](https://github.com/suptower/worldweather-cli/commit/e5c04213c6ec6a834226f9b8f15e57821f6e3e34))
 
 ### [0.4.2](https://github.com/suptower/worldweather-cli/compare/v0.4.1...v0.4.2) (2023-07-10)
 
