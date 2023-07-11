@@ -1,22 +1,43 @@
 #!/usr/bin/env node --no-warnings
+// make us of .env file
 import "dotenv/config";
+
+// persist config
 import Conf from "conf";
+
+// terminal styling
 import chalk from "chalk";
+
+// user input
 import prompts from "prompts";
+
+// weather api
 import { weather, weatherprompt } from "./weather.js";
+
+// cli options
 import getopts from "getopts";
+
+// filesystem
 import { readFileSync } from "fs";
+
+// gradient colors
 import gradient from "gradient-string";
 
+// read package.json
 const packageJson = JSON.parse(readFileSync("./package.json"));
 
+// persist config
 const config = new Conf({ projectName: "weather-cli" });
+
+// get cli arguments
 const argv = process.argv.slice(2);
 
+// set api key from env variable
 if (process.env.API_KEY) {
   config.set("api", process.env.API_KEY);
 }
 
+// cli options
 const options = getopts(argv, {
   alias: {
     help: "h",
@@ -28,6 +49,7 @@ const options = getopts(argv, {
   },
 });
 
+// weather --help
 if (options.help) {
   console.clear();
   console.log(
@@ -57,11 +79,13 @@ if (options.help) {
   process.exit(0);
 }
 
+// weather --version
 if (options.version) {
   console.log(chalk.green("v" + packageJson.version));
   process.exit(0);
 }
 
+// weather --env
 if (options.env) {
   if (process.env.API_KEY) {
     await config.set("api", process.env.API_KEY);
@@ -72,6 +96,7 @@ if (options.env) {
   process.exit(0);
 }
 
+// weather --info
 if (options.info) {
   console.clear();
   console.log(gradient.teen("Weather CLI"));
@@ -83,8 +108,10 @@ if (options.info) {
   process.exit(0);
 }
 
+// weather --api
 if (options.api) {
   (async () => {
+    // prompt for api key
     const response = await prompts({
       type: "text",
       name: "api",
@@ -99,6 +126,7 @@ if (options.api) {
     process.exit(0);
   })();
 } else if (options.fast) {
+  // fast mode, only condition and temperature
   console.clear();
   if (argv.length > 1) {
     weather(argv.join(" "));
@@ -106,6 +134,7 @@ if (options.api) {
     console.log(chalk.red("You need to specify a location."));
   }
 } else {
+  // prompt for location
   console.clear();
   if (argv.length > 0) {
     weatherprompt(argv.join(" "));
