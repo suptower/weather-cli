@@ -6,7 +6,7 @@
   "exports": "./index.js",
   "type": "module",
   "scripts": {
-    "release": "standard-version",
+    "release": "commit-and-tag-version",
     "lint": "prettier --check . && eslint .",
     "lint:fix": "prettier --write . && eslint . --fix"
   },
@@ -40,13 +40,13 @@
   },
   "homepage": "https://github.com/suptower/worldweather-cli#readme",
   "devDependencies": {
+    "commit-and-tag-version": "^11.2.2",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-promise": "^6.1.1",
-    "prettier": "^2.8.8",
-    "standard-version": "^9.5.0"
+    "prettier": "^2.8.8"
   },
   "dependencies": {
     "chalk": "^5.2.0",

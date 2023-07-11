@@ -30,7 +30,8 @@ const options = getopts(argv, {
 
 if (options.help) {
   console.clear();
-  console.log(gradient.morning(`
+  console.log(
+    gradient.morning(`
     Usage: 
         $ weather [options]
         $ weather [location]
@@ -51,7 +52,8 @@ if (options.help) {
         $ weather --info
         $ weather -f Munich
         $ weather
-    `));
+    `),
+  );
   process.exit(0);
 }
 
