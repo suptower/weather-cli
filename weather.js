@@ -40,7 +40,7 @@ export const weather = async location => {
           " is " +
           chalk.blue(response.current.condition.text) +
           " with a temperature of " +
-          chalk.blue(response.current.temp_c) +
+          chalk.blue(getTemperatureWithUnit(response.current)) +
           "°C.",
       );
     })
@@ -252,7 +252,7 @@ const printLocation = async (response, callback) => {
 const printCurrent = async (response, callback) => {
   console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.last_updated) + "):"));
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
-  console.log(chalk.magenta("Temperature: " + chalk.cyan(response.temp_c + "°C")));
+  console.log(chalk.magenta("Temperature: " + chalk.cyan(getTemperatureWithUnit(response))));
   // Prompt user to go back to location screen
   await prompts({
     type: "toggle",
@@ -276,7 +276,7 @@ const printCurrentDetailed = async (response, callback) => {
   console.log(chalk.blue("Current condition (detailed):"));
   console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.last_updated) + "):"));
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
-  console.log(chalk.magenta("Temperature: " + chalk.cyan(response.temp_c + "°C")));
+  console.log(chalk.magenta("Temperature: " + chalk.cyan(getTemperatureWithUnit(response))));
   console.log(
     chalk.magenta("Wind Speed | Direction: " + chalk.cyan(response.wind_kph + " km/h | " + response.wind_dir)),
   );
@@ -309,7 +309,7 @@ const printCurrentDetailedForecast = async (current, response, callback, days) =
   console.log(chalk.blue("Current condition (detailed):"));
   console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(current.last_updated) + "):"));
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
-  console.log(chalk.magenta("Temperature: " + chalk.cyan(response.temp_c + "°C")));
+  console.log(chalk.magenta("Temperature: " + chalk.cyan(getTemperatureWithUnit(response))));
   console.log(
     chalk.magenta("Wind Speed | Direction: " + chalk.cyan(response.wind_kph + " km/h | " + response.wind_dir)),
   );
@@ -336,4 +336,13 @@ const printCurrentDetailedForecast = async (current, response, callback, days) =
       promptMenu(callback);
     }
   });
+};
+
+// Auxiliary function to get correct temperature unit saved from config, directly returns String of temperature with unit
+const getTemperatureWithUnit = (response) => {
+  if (config.get("unit") === "metric") {
+    return response.temp_c + "°C";
+  } else {
+    return response.temp_f + "°F";
+  }
 };
