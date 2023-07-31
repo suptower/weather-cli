@@ -27,7 +27,14 @@ import gradient from "gradient-string";
 const packageJson = JSON.parse(readFileSync("./package.json"));
 
 // persist config
-const config = new Conf({ projectName: "weather-cli" });
+const schema = {
+  unit: {
+    type: "string",
+    default: "metric",
+  },
+};
+
+const config = new Conf({ projectName: "weather-cli", schema });
 
 // get cli arguments
 const argv = process.argv.slice(2);
@@ -43,6 +50,7 @@ const options = getopts(argv, {
     help: "h",
     version: "v",
     api: "a",
+    config: "c",
     env: "e",
     fast: "f",
     info: "i",
@@ -63,14 +71,16 @@ if (options.help) {
         -h, --help          output usage information
         -v, --version       output the version number
         -a, --api           set api key
+        -c, --config        show config
         -e, --env           set api key from environment variable API_KEY
-        -f , --fast         fast mode, no prompt, locations as arg
+        -f , --fast [loc]   fast mode, no prompt, location as arg
         -i, --info          show project related info
 
     Examples:
         $ weather Munich
         $ weather --api
         $ weather -v
+        $ weather --config
         $ weather --info
         $ weather -f Munich
         $ weather
@@ -108,8 +118,57 @@ if (options.info) {
   process.exit(0);
 }
 
-// weather --api
-if (options.api) {
+// weather --config
+if (options.config) {
+  (async () => {
+    console.clear();
+    // prompt for config
+    const response = await prompts({
+      type: "select",
+      name: "config",
+      message: "Select config option",
+      choices: [
+        { title: "Show API key", value: "show" },
+        { title: "Delete API key", value: "delete" },
+        { title: "Set temperature unit", value: "unit" },
+        { title: "Cancel", value: "cancel" },
+      ],
+    });
+    if (response.config === "show") {
+      const api = await config.get("api");
+      if (api) {
+        console.log(chalk.green("API key: " + api));
+      } else {
+        console.log(chalk.red("API key undefined."));
+      }
+    }
+    if (response.config === "delete") {
+      await config.delete("api");
+      console.log(chalk.green("API key deleted."));
+    }
+    if (response.config === "unit") {
+      // Check for active choise
+      let unitInitial = 1;
+      if (config.get("unit") === "metric") {
+        unitInitial = 0;
+      }
+      const unit = await prompts({
+        type: "select",
+        name: "unit",
+        message: "Select temperature unit",
+        choices: [
+          { title: "Celsius", value: "metric" },
+          { title: "Fahrenheit", value: "imperial" },
+        ],
+        initial: unitInitial,
+      });
+      await config.set("unit", unit.unit);
+      console.log(chalk.green("Temperature unit saved as " + config.get("unit") + "."));
+    }
+    process.exit(0);
+  })();
+} else if (options.api) {
+  // 
   (async () => {
     // prompt for api key
     const response = await prompts({
