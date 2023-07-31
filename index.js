@@ -131,6 +131,7 @@ if (options.config) {
         { title: "Show API key", value: "show" },
         { title: "Delete API key", value: "delete" },
         { title: "Set temperature unit", value: "unit" },
+        { title: "Clear config", value: "clear" },
         { title: "Cancel", value: "cancel" },
       ],
     });
@@ -164,6 +165,10 @@ if (options.config) {
       });
       await config.set("unit", unit.unit);
       console.log(chalk.green("Temperature unit saved as " + config.get("unit") + "."));
+    }
+    if (response.config === "clear") {
+      await config.clear();
+      console.log(chalk.green("Config cleared."));
     }
     process.exit(0);
   })();
