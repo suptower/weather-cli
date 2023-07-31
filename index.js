@@ -168,7 +168,7 @@ if (options.config) {
     process.exit(0);
   })();
 } else if (options.api) {
-  // 
+  //
   (async () => {
     // prompt for api key
     const response = await prompts({
