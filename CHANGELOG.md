@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.5](https://github.com/suptower/worldweather-cli/compare/v0.4.4...v0.4.5) (2023-07-31)
+
+
+### Bug Fixes
+
+* **autodate:** :bug: ensure corract formatting of first, second, third, "th" endings ([aa08784](https://github.com/suptower/worldweather-cli/commit/aa087843e04e25bd36be27a63c400fb86696de62))
+
 ## [0.4.4](https://github.com/suptower/worldweather-cli/compare/v0.4.3...v0.4.4) (2023-07-31)
 
 
