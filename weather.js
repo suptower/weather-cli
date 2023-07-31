@@ -339,7 +339,7 @@ const printCurrentDetailedForecast = async (current, response, callback, days) =
 };
 
 // Auxiliary function to get correct temperature unit saved from config, directly returns String of temperature with unit
-const getTemperatureWithUnit = (response) => {
+const getTemperatureWithUnit = response => {
   if (config.get("unit") === "metric") {
     return response.temp_c + "°C";
   } else {
