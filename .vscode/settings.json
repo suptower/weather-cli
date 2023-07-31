@@ -4,6 +4,7 @@
     "package",
     "git",
     "deps",
-    "ux"
+    "ux",
+    "autodate"
   ]
 }

@@ -4,11 +4,14 @@ const dateTime = new Date();
 const date = dateTime.getDate();
 
 let dayString = date.toString();
-if (date === 1) {
+const lastDigit = dayString.charAt(dayString.length - 1);
+if (dayString === '11' || dayString === '12' || dayString === '13') {
+  dayString += "th";
+} else if (lastDigit === '1') {
   dayString += "st";
-} else if (date === 2) {
+} else if (lastDigit === '2') {
   dayString += "nd";
-} else if (date === 3) {
+} else if (lastDigit === '3') {
   dayString += "rd";
 } else {
   dayString += "th";
