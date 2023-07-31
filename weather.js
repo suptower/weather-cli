@@ -18,6 +18,9 @@ const config = new Conf({ projectName: "weather-cli" });
 // get API key from config
 const API_KEY = config.get("api");
 
+// Date for forecast warning
+const dateTime = new Date();
+
 // set API URL
 const API_URL = "http://api.weatherapi.com/v1/current.json?key=" + API_KEY + "&q=";
 const API_URL_FORECAST = "http://api.weatherapi.com/v1/forecast.json?key=" + API_KEY + "&q=";
@@ -151,18 +154,34 @@ const promptMenu = async response => {
       break;
     case "forecast": {
       console.log(chalk.blue("Forecast:"));
-      console.log(
-        chalk.bold.yellow(
-          "Forecast API currently supports only up to a maximum of 14 days. Depending on the location, the forecast data may only be available for a shorter period.",
-        ),
-      );
-      const showForecast = await prompts({
-        type: "confirm",
-        name: "value",
-        message: "Do you wish to continue?",
-        initial: true,
-      });
-      if (showForecast.value) {
+      const days = dateTime.getDate().toString();
+      const months = (dateTime.getMonth() + 1).toString();
+      const years = dateTime.getFullYear().toString();
+      const proof = days + "." + months + "." + years;
+      let showForecast = false;
+      const configString = String(config.get("forecast_api"));
+      const proofString = proof.toString();
+      if (config.get("forecast_api") === undefined || configString.localeCompare(proofString) !== 0) {
+        // warning has not been shown today
+        console.log(
+          chalk.bold.yellow(
+            "Forecast API currently supports only up to a maximum of 14 days. Depending on the location, the forecast data may only be available for a shorter period.",
+          ),
+        );
+        showForecast = await prompts({
+          type: "confirm",
+          name: "value",
+          message: "Do you wish to continue?",
+          initial: true,
+        });
+        if (showForecast.value) {
+          config.set("forecast_api", proof);
+          showForecast = true;
+        }
+      } else {
+        showForecast = true;
+      }
+      if (showForecast === true) {
         const days = await prompts({
           type: "number",
           name: "value",
