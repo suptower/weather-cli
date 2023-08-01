@@ -222,15 +222,21 @@ const getForecast = async (response, days) => {
       console.log(
         chalk.yellow("Data has been fetched for " + chalk.cyan(response.forecast.forecastday.length) + " days."),
       );
-      // Let user select a day
+      // Let user select a day or exit
+      const dayChoices = response.forecast.forecastday.map(day => {
+        return { title: day.date, value: day };
+      });
+      dayChoices.push({ title: "Exit", value: "exit" });
       await prompts({
         type: "select",
         name: "value",
         message: "Select a day",
-        choices: response.forecast.forecastday.map(day => {
-          return { title: day.date, value: day };
-        }),
+        choices: dayChoices,
       }).then(day => {
+        if (day.value === "exit") {
+          console.log(chalk.red("Exiting..."));
+          return;
+        }
         console.log(
           chalk.blue("You selected " + chalk.cyan(day.value.date) + ". Data will be shown for " + chalk.cyan("12 PM.")),
         );
