@@ -123,6 +123,8 @@ if (options.config) {
   (async () => {
     console.clear();
     // prompt for config
+    // TODO: add option to choose between forecast traversing style (dial arrow-up arrow-down / preset list morning, noon, evening, night)
+    // TODO: make user able to modify preset times
     const response = await prompts({
       type: "select",
       name: "config",

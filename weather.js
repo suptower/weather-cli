@@ -232,17 +232,28 @@ const getForecast = async (response, days) => {
         name: "value",
         message: "Select a day",
         choices: dayChoices,
-      }).then(day => {
+      }).then(async day => {
         if (day.value === "exit") {
           console.log(chalk.red("Exiting..."));
           return;
         }
         console.log(
-          chalk.blue("You selected " + chalk.cyan(day.value.date) + ". Data will be shown for " + chalk.cyan("12 PM.")),
+          chalk.blue("You selected " + chalk.cyan(day.value.date) + ". You can now select a time to view the forecast."),
         );
-        printCurrentDetailedForecast(response.current, day.value.hour[12], response, days);
-      });
+        // TODO: Make user able to select a time / if config is set to preset time, show preset options morning, noon, evening, night
+        // make number prompt for hour
+        await prompts({
+          type: "number",
+          name: "value",
+          message: "Select an hour (0-23)",
+          initial: 12,
+          min: 0,
+          max: 23,
+        }).then(async hour => {
+          printCurrentDetailedForecast(response.current, day.value.hour[hour.value], response, days);
+        });
     });
+  });
 };
 
 // Takes response.location
@@ -298,8 +309,7 @@ const printCurrent = async (response, callback) => {
 
 // Takes response.current
 const printCurrentDetailed = async (response, callback) => {
-  console.log(chalk.blue("Current condition (detailed):"));
-  console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(response.last_updated) + "):"));
+  console.log(chalk.blue("Current condition (detailed | last updated: " + chalk.italic.cyan(response.last_updated) + "):"));
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
   console.log(chalk.magenta("Temperature: " + chalk.cyan(getTemperatureWithUnit(response))));
   console.log(
@@ -331,8 +341,7 @@ const printCurrentDetailed = async (response, callback) => {
 
 // New method for printing current detailed forecast
 const printCurrentDetailedForecast = async (current, response, callback, days) => {
-  console.log(chalk.blue("Current condition (detailed):"));
-  console.log(chalk.blue("Current condition (last updated: " + chalk.cyan(current.last_updated) + "):"));
+  console.log(chalk.blue("Current condition (detailed) for " + chalk.green(response.time) + " (" + chalk.italic.cyan("last updated: " + chalk.italic.cyan(current.last_updated))) + ")");
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
   console.log(chalk.magenta("Temperature: " + chalk.cyan(getTemperatureWithUnit(response))));
   console.log(
