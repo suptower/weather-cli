@@ -32,6 +32,19 @@ const schema = {
     type: "string",
     default: "metric",
   },
+  traverse: {
+    type: "string",
+    default: "dial",
+  },
+  presetOptions: {
+    type: "array",
+    default: [
+      { title: "Morning", value: "6"},
+      { title: "Noon", value: "12"},
+      { title: "Evening", value: "18"},
+      { title: "Night", value: "0"},
+    ],
+  },
 };
 
 const config = new Conf({ projectName: "weather-cli", schema });
@@ -123,7 +136,6 @@ if (options.config) {
   (async () => {
     console.clear();
     // prompt for config
-    // TODO: add option to choose between forecast traversing style (dial arrow-up arrow-down / preset list morning, noon, evening, night)
     // TODO: make user able to modify preset times
     const response = await prompts({
       type: "select",
@@ -133,6 +145,7 @@ if (options.config) {
         { title: "Show API key", value: "show" },
         { title: "Delete API key", value: "delete" },
         { title: "Set temperature unit", value: "unit" },
+        { title: "Set forecast hour traversing style", value: "traverse"},
         { title: "Clear config", value: "clear" },
         { title: "Cancel", value: "cancel" },
       ],
@@ -171,6 +184,25 @@ if (options.config) {
     if (response.config === "clear") {
       await config.clear();
       console.log(chalk.green("Config cleared."));
+    }
+    if (response.config === "traverse") {
+      // Check for active choise
+      let traverseInitial = 0;
+      if (config.get("traverse") === "preset") {
+        traverseInitial = 1;
+      }
+      const traverse = await prompts({
+        type: "select",
+        name: "traverse",
+        message: "Select forecast hour traversing style",
+        choices: [
+          { title: "Dial", value: "dial" },
+          { title: "Preset times", value: "preset" },
+        ],
+        initial: traverseInitial,
+      });
+      await config.set("traverse", traverse.traverse);
+      console.log(chalk.green("Forecast hour traversing style saved as " + config.get("traverse") + "."));
     }
     process.exit(0);
   })();

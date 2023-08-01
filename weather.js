@@ -240,18 +240,29 @@ const getForecast = async (response, days) => {
         console.log(
           chalk.blue("You selected " + chalk.cyan(day.value.date) + ". You can now select a time to view the forecast."),
         );
-        // TODO: Make user able to select a time / if config is set to preset time, show preset options morning, noon, evening, night
-        // make number prompt for hour
-        await prompts({
-          type: "number",
-          name: "value",
-          message: "Select an hour (0-23)",
-          initial: 12,
-          min: 0,
-          max: 23,
-        }).then(async hour => {
-          printCurrentDetailedForecast(response.current, day.value.hour[hour.value], response, days);
-        });
+        if (config.get("traverse") === "dial") {
+          // make number prompt for hour, traverse-dial-style
+          await prompts({
+            type: "number",
+            name: "value",
+            message: "Select an hour (0-23)",
+            initial: 12,
+            min: 0,
+            max: 23,
+          }).then(async hour => {
+            printCurrentDetailedForecast(response.current, day.value.hour[hour.value], response, days);
+          });
+        } else {
+          // show preset options
+          const presetTimes = await config.get("presetOptions");
+          const preset = await prompts({
+            type: "select",
+            name: "value",
+            message: "Select a preset",
+            choices: presetTimes,
+          });
+          printCurrentDetailedForecast(response.current, day.value.hour[preset.value], response, days);
+        }
     });
   });
 };
