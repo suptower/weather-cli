@@ -64,6 +64,7 @@ const options = getopts(argv, {
     version: "v",
     api: "a",
     config: "c",
+    delete_config: "d",
     env: "e",
     fast: "f",
     info: "i",
@@ -85,6 +86,7 @@ if (options.help) {
         -v, --version       output the version number
         -a, --api           set api key
         -c, --config        show config
+        -d, --delete_config clear config
         -e, --env           set api key from environment variable API_KEY
         -f , --fast [loc]   fast mode, no prompt, location as arg
         -i, --info          show project related info
@@ -146,6 +148,7 @@ if (options.config) {
         { title: "Delete API key", value: "delete" },
         { title: "Set temperature unit", value: "unit" },
         { title: "Set forecast hour traversing style", value: "traverse"},
+        { title: "Preset Times Configuration", value: "preset"},
         { title: "Clear config", value: "clear" },
         { title: "Cancel", value: "cancel" },
       ],
@@ -204,6 +207,157 @@ if (options.config) {
       await config.set("traverse", traverse.traverse);
       console.log(chalk.green("Forecast hour traversing style saved as " + config.get("traverse") + "."));
     }
+    if (response.config === "preset") {
+      // Show options
+      const editPresets = await prompts({
+        type: "select",
+        name: "value",
+        message: "Choose an option",
+        choices: [
+          { title: "Add preset time", value: "add" },
+          { title: "Edit preset time", value: "edit"},
+          { title: "Remove preset time", value: "remove" },
+          { title: "Show preset times", value: "show" },
+          { title: "Reset preset times", value: "reset"},
+          { title: "Cancel", value: "cancel" },
+        ],
+      });
+      if (editPresets.value === "add") {
+        // Add preset time
+        const addPreset = await prompts({
+          type: "text",
+          name: "value",
+          message: "Enter a preset name",
+        });
+        if (addPreset.value) {
+          const addPresetTime = await prompts({
+            type: "number",
+            name: "value",
+            message: "Enter a preset time",
+            initial: 0,
+            min: 0,
+            max: 23,
+          });
+          if (addPresetTime.value) {
+            const presetTimes = await config.get("presetOptions");
+            presetTimes.push({ title: addPreset.value, value: addPresetTime.value });
+            presetTimes.sort((a, b) => a.value - b.value);
+            await config.set("presetOptions", presetTimes);
+            console.log(chalk.green("Preset time added."));
+          } else {
+            console.log(chalk.red("Preset time undefined."));
+          }
+        } else {
+          console.log(chalk.red("Preset name undefined."));
+        }
+      } else if (editPresets.value === "edit") {
+        // make prompt for preset time
+        const presetTimes = await config.get("presetOptions");
+        // make sure there are preset times
+        if (presetTimes.length > 0) {
+          const selectPreset = await prompts({
+            type: "select",
+            name: "value",
+            message: "Select a preset time",
+            choices: presetTimes,
+          });
+          if (selectPreset.value) {
+            // edit name
+            const editPreset = await prompts({
+              type: "text",
+              name: "value",
+              message: "Enter a preset name",
+              initial: selectPreset.value.title,
+            });
+            if (editPreset.value) {
+              // edit time
+              const editPresetTime = await prompts({
+                type: "number",
+                name: "value",
+                message: "Enter a preset time",
+                initial: selectPreset.value.value,
+                min: 0,
+                max: 23,
+              });
+              if (editPresetTime.value) {
+                // remove old preset
+                for (let i = 0; i < presetTimes.length; i++) {
+                  if (presetTimes[i].value === selectPreset.value) {
+                    presetTimes.splice(i, 1);
+                    break;
+                  }
+                }
+                // add new preset
+                presetTimes.push({ title: editPreset.value, value: editPresetTime.value });
+                presetTimes.sort((a, b) => a.value - b.value);
+                await config.set("presetOptions", presetTimes);
+                console.log(chalk.green("Preset time edited."));
+              } else {
+                console.log(chalk.red("Preset time undefined."));
+              }
+            } else {
+              console.log(chalk.red("Preset name undefined."));
+            }
+          }
+        } else {
+          console.log(chalk.red("No preset times."));
+        }
+      } else if (editPresets.value === "remove") {
+        // show prompts for preset time
+        const presetTimes = await config.get("presetOptions");
+        // make sure there are preset times
+        if (presetTimes.length > 0) {
+          const selectPreset = await prompts({
+            type: "select",
+            name: "value",
+            message: "Select a preset time",
+            choices: presetTimes,
+          });
+          if (selectPreset.value !== undefined) {
+            // remove preset
+            for (let i = 0; i < presetTimes.length; i++) {
+              if (presetTimes[i].value === selectPreset.value) {
+                  presetTimes.splice(i, 1);
+                  await config.set("presetOptions", presetTimes);
+                  break;
+              }
+            }
+            console.log(chalk.green("Preset time removed."));
+          }
+        } else {
+          console.log(chalk.red("No preset times."));
+        }
+      } else if (editPresets.value === "show") {
+        // print out preset times
+        const presetTimes = await config.get("presetOptions");
+        // make sure there are preset times
+        if (presetTimes.length > 0) {
+          console.log(chalk.green("Preset times:"));
+          for (let i = 0; i < presetTimes.length; i++) {
+            console.log(chalk.green(presetTimes[i].title + ": " + presetTimes[i].value));
+          }
+        } else {
+          console.log(chalk.red("No preset times."));
+        }
+      } else if (editPresets.value === "reset") {
+        // make array with default preset times
+        const presetTimes = [
+          { title: "Morning", value: 6 },
+          { title: "Afternoon", value: 12 },
+          { title: "Evening", value: 18 },
+          { title: "Night", value: 0 },
+        ];
+        await config.set("presetOptions", presetTimes);
+        console.log(chalk.green("Preset times reset."));
+      }
+    }
+    process.exit(0);
+  })();
+} else if (options.delete_config) {
+  // clear config
+  (async () => {
+    await config.clear();
+    console.log(chalk.green("Config cleared."));
     process.exit(0);
   })();
 } else if (options.api) {

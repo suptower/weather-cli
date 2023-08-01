@@ -240,7 +240,22 @@ const getForecast = async (response, days) => {
         console.log(
           chalk.blue("You selected " + chalk.cyan(day.value.date) + ". You can now select a time to view the forecast."),
         );
-        if (config.get("traverse") === "dial") {
+        const presetTimes = await config.get("presetOptions");
+        if (config.get("traverse") === "preset" && presetTimes !== undefined && presetTimes.length > 0) {
+          // show preset options
+          const preset = await prompts({
+            type: "select",
+            name: "value",
+            message: "Select a preset",
+            choices: presetTimes,
+          });
+          printCurrentDetailedForecast(response.current, day.value.hour[preset.value], response, days);
+        } else {
+          if (config.get("traverse") === "preset") {
+            console.log(chalk.red("No preset options available. Please add some presets."));
+            console.log(chalk.yellow("You can do this by running the command: " + chalk.cyan("weather -c") + chalk.magenta(" (weather --config)")));
+            console.log(chalk.blue("Using traverse-dial-style instead."));
+          }
           // make number prompt for hour, traverse-dial-style
           await prompts({
             type: "number",
@@ -252,17 +267,7 @@ const getForecast = async (response, days) => {
           }).then(async hour => {
             printCurrentDetailedForecast(response.current, day.value.hour[hour.value], response, days);
           });
-        } else {
-          // show preset options
-          const presetTimes = await config.get("presetOptions");
-          const preset = await prompts({
-            type: "select",
-            name: "value",
-            message: "Select a preset",
-            choices: presetTimes,
-          });
-          printCurrentDetailedForecast(response.current, day.value.hour[preset.value], response, days);
-        }
+        } 
     });
   });
 };
