@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.4.6](https://github.com/suptower/worldweather-cli/compare/v0.4.3...v0.4.6) (2023-08-01)
+
+
+### Features
+
+* :adhesive_bandage: forecast warning once per day ([678db6d](https://github.com/suptower/worldweather-cli/commit/678db6d63f8cb88137feb1d4f25664b2bbd53d15))
+* :sparkles: implemented preset time forecast ([9c08378](https://github.com/suptower/worldweather-cli/commit/9c083780e7a5a14d849248f7dd2677dafc7cdac2))
+* :sparkles: prompt for hour dial on forecast day ([5110dea](https://github.com/suptower/worldweather-cli/commit/5110deaeabb276e4af4ab8b72005cc17d6520925))
+* :sparkles: user can fully modify preset times ([f04b037](https://github.com/suptower/worldweather-cli/commit/f04b0370d34a09c0d0a4531ce31a59d40114b02b))
+* **ux:** :children_crossing: added cli config ([cc280b2](https://github.com/suptower/worldweather-cli/commit/cc280b2ca9693313c71135b44d9d7c43fd61af8f))
+* **ux:** :children_crossing: option to exit forecast from day selection ([0902120](https://github.com/suptower/worldweather-cli/commit/0902120010c86ff71054a9f1d7d5ee3ba11d0456))
+* **ux:** :lipstick: use string tables for showing preset times ([32c70d9](https://github.com/suptower/worldweather-cli/commit/32c70d9613ac3ae649219d786580cf925e7a48bd))
+* **ux:** :wrench: fully implemented configHandler ([eaf75e0](https://github.com/suptower/worldweather-cli/commit/eaf75e00cc65e6461287595b0e082ff6a0166b8b))
+
+
+### Bug Fixes
+
+* **autodate:** :bug: ensure corract formatting of first, second, third, "th" endings ([bf59f25](https://github.com/suptower/worldweather-cli/commit/bf59f251822e3d4bbf0f0acb35170cd93515b3cb))
+
 ## [0.4.5](https://github.com/suptower/worldweather-cli/compare/v0.4.4...v0.4.5) (2023-07-31)
 
 
