@@ -23,6 +23,9 @@ import { readFileSync } from "fs";
 // gradient colors
 import gradient from "gradient-string";
 
+// string tables
+import { table } from "table";
+
 // read package.json
 const packageJson = JSON.parse(readFileSync("./package.json"));
 
@@ -332,10 +335,13 @@ if (options.config) {
         const presetTimes = await config.get("presetOptions");
         // make sure there are preset times
         if (presetTimes.length > 0) {
-          console.log(chalk.green("Preset times:"));
+          const arrayPresetTimes = [
+            ["Name", "Time"],
+          ];
           for (let i = 0; i < presetTimes.length; i++) {
-            console.log(chalk.green(presetTimes[i].title + ": " + presetTimes[i].value));
+            arrayPresetTimes.push([presetTimes[i].title, presetTimes[i].value]);
           }
+          console.log(gradient.morning(table(arrayPresetTimes)));
         } else {
           console.log(chalk.red("No preset times."));
         }
