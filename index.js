@@ -14,6 +14,9 @@ import prompts from "prompts";
 // weather api
 import { weather, weatherprompt } from "./weather.js";
 
+// config handler
+import { configHandler } from "./configHandler.js";
+
 // cli options
 import getopts from "getopts";
 
@@ -23,6 +26,8 @@ import { readFileSync } from "fs";
 // gradient colors
 import gradient from "gradient-string";
 
+// string tables
+
 // read package.json
 const packageJson = JSON.parse(readFileSync("./package.json"));
 
@@ -31,6 +36,19 @@ const schema = {
   unit: {
     type: "string",
     default: "metric",
+  },
+  traverse: {
+    type: "string",
+    default: "dial",
+  },
+  presetOptions: {
+    type: "array",
+    default: [
+      { title: "Night", value: "0"},
+      { title: "Morning", value: "6"},
+      { title: "Noon", value: "12"},
+      { title: "Evening", value: "18"},
+    ],
   },
 };
 
@@ -51,6 +69,7 @@ const options = getopts(argv, {
     version: "v",
     api: "a",
     config: "c",
+    delete_config: "d",
     env: "e",
     fast: "f",
     info: "i",
@@ -72,6 +91,7 @@ if (options.help) {
         -v, --version       output the version number
         -a, --api           set api key
         -c, --config        show config
+        -d, --delete_config clear config
         -e, --env           set api key from environment variable API_KEY
         -f , --fast [loc]   fast mode, no prompt, location as arg
         -i, --info          show project related info
@@ -121,55 +141,14 @@ if (options.info) {
 // weather --config
 if (options.config) {
   (async () => {
-    console.clear();
-    // prompt for config
-    const response = await prompts({
-      type: "select",
-      name: "config",
-      message: "Select config option",
-      choices: [
-        { title: "Show API key", value: "show" },
-        { title: "Delete API key", value: "delete" },
-        { title: "Set temperature unit", value: "unit" },
-        { title: "Clear config", value: "clear" },
-        { title: "Cancel", value: "cancel" },
-      ],
-    });
-    if (response.config === "show") {
-      const api = await config.get("api");
-      if (api) {
-        console.log(chalk.green("API key: " + api));
-      } else {
-        console.log(chalk.red("API key undefined."));
-      }
-    }
-    if (response.config === "delete") {
-      await config.delete("api");
-      console.log(chalk.green("API key deleted."));
-    }
-    if (response.config === "unit") {
-      // Check for active choise
-      let unitInitial = 1;
-      if (config.get("unit") === "metric") {
-        unitInitial = 0;
-      }
-      const unit = await prompts({
-        type: "select",
-        name: "unit",
-        message: "Select temperature unit",
-        choices: [
-          { title: "Celsius", value: "metric" },
-          { title: "Fahrenheit", value: "imperial" },
-        ],
-        initial: unitInitial,
-      });
-      await config.set("unit", unit.unit);
-      console.log(chalk.green("Temperature unit saved as " + config.get("unit") + "."));
-    }
-    if (response.config === "clear") {
-      await config.clear();
-      console.log(chalk.green("Config cleared."));
-    }
+    await configHandler();
+    process.exit(0);
+  })();
+} else if (options.delete_config) {
+  // clear config
+  (async () => {
+    await config.clear();
+    console.log(chalk.green("Config cleared."));
     process.exit(0);
   })();
 } else if (options.api) {
