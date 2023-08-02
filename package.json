@@ -6,9 +6,10 @@
 	"exports": "./index.js",
 	"type": "module",
 	"scripts": {
-		"release": "commit-and-tag-version",
+		"release": "node ./bin/autodate.js && commit-and-tag-version",
 		"lint": "prettier --check . && eslint .",
-		"lint:fix": "prettier --write . && eslint . --fix"
+		"lint:fix": "prettier --write . && eslint . --fix",
+		"autodate": "node ./bin/autodate.js"
 	},
 	"bin": {
 		"weather": "./bin/index.js"
@@ -37,10 +38,6 @@
 	"license": "MIT",
 	"bugs": {
 		"url": "https://github.com/suptower/worldweather-cli/issues"
-	},
-	"publishConfig": {
-		"registry": "https://npm.pkg.github.com/suptower",
-		"access": "public"
 	},
 	"homepage": "https://github.com/suptower/worldweather-cli#readme",
 	"devDependencies": {
