@@ -143,7 +143,6 @@ const setTraverseStyle = async () => {
 
 const presetConfig = async () => {
   // Show options
-  // TODO block preset if one with same name/time exists
   const editPresets = await prompts({
     type: "select",
     name: "value",

@@ -13,6 +13,9 @@ import prompts from "prompts";
 // spinners
 import ora from "ora";
 
+// triple forecast
+import { tripleForecast } from "./tripleForecast.js";
+
 const config = new Conf({ projectName: "weather-cli" });
 
 // get API key from config
@@ -139,6 +142,7 @@ const promptMenu = async response => {
       { title: "Current condition", value: "current" },
       { title: "Current condition (detailed)", value: "currentdetailed" },
       { title: "Forecast", value: "forecast" },
+      { title: "3-day forecast", value: "3day" },
       { title: "Exit", value: "exit" },
     ],
   });
@@ -194,6 +198,11 @@ const promptMenu = async response => {
       } else {
         console.log(chalk.red("Forecast cancelled."));
       }
+      break;
+    }
+    case "3day": {
+      console.log(chalk.blue("3-day forecast:"));
+      tripleForecast(response.location.name);
       break;
     }
     case "exit": {

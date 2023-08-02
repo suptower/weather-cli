@@ -6,5 +6,6 @@
     "deps",
     "ux",
     "autodate"
-  ]
+  ],
+  "todo-tree.tree.scanMode": "workspace only"
 }
