@@ -44,10 +44,10 @@ const schema = {
   presetOptions: {
     type: "array",
     default: [
-      { title: "Night", value: "0"},
-      { title: "Morning", value: "6"},
-      { title: "Noon", value: "12"},
-      { title: "Evening", value: "18"},
+      { title: "Night", value: "0" },
+      { title: "Morning", value: "6" },
+      { title: "Noon", value: "12" },
+      { title: "Evening", value: "18" },
     ],
   },
 };

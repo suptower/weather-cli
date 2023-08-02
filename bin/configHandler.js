@@ -15,7 +15,7 @@ import { table } from "table";
 
 const config = new Conf({ projectName: "weather-cli" });
 
-export const configHandler =  async (noclear) => {
+export const configHandler = async noclear => {
   if (!noclear) {
     console.clear();
   }
@@ -28,8 +28,8 @@ export const configHandler =  async (noclear) => {
       { title: "Show API key", value: "show" },
       { title: "Delete API key", value: "delete" },
       { title: "Set temperature unit", value: "unit" },
-      { title: "Set forecast hour traversing style", value: "traverse"},
-      { title: "Preset Times Configuration", value: "preset"},
+      { title: "Set forecast hour traversing style", value: "traverse" },
+      { title: "Preset Times Configuration", value: "preset" },
       { title: "Clear config", value: "clear" },
       { title: "Cancel", value: "cancel" },
     ],
@@ -64,7 +64,7 @@ export const configHandler =  async (noclear) => {
 
 // recall function to go back to main configuration menu, noclear specifies if the screen should be cleared or not
 // noclear is false by default and will clear the screen
-const recall = async (noclear) => {
+const recall = async noclear => {
   // check if noclear is defined
   if (noclear === undefined) {
     noclear = false;
@@ -94,7 +94,7 @@ const showAPI = async () => {
 const deleteAPI = async () => {
   await config.delete("api");
   console.log(chalk.green("API key deleted."));
-}
+};
 
 const setUnit = async () => {
   // Check for active choise
@@ -114,12 +114,12 @@ const setUnit = async () => {
   });
   await config.set("unit", unit.unit);
   console.log(chalk.green("Temperature unit saved as " + config.get("unit") + "."));
-}
+};
 
 const clearConfig = async () => {
   await config.clear();
   console.log(chalk.green("Config cleared."));
-}
+};
 
 const setTraverseStyle = async () => {
   // Check for active choise
@@ -139,38 +139,38 @@ const setTraverseStyle = async () => {
   });
   await config.set("traverse", traverse.traverse);
   console.log(chalk.green("Forecast hour traversing style saved as " + config.get("traverse") + "."));
-}
+};
 
 const presetConfig = async () => {
-    // Show options
-    // TODO block preset if one with same name/time exists
-    const editPresets = await prompts({
-      type: "select",
-      name: "value",
-      message: "Choose an option",
-      choices: [
-        { title: "Add preset time", value: "add" },
-        { title: "Edit preset time", value: "edit"},
-        { title: "Remove preset times", value: "remove" },
-        { title: "Show preset times", value: "show" },
-        { title: "Reset preset times", value: "reset"},
-        { title: "Cancel", value: "cancel" },
-      ],
-    });
-    if (editPresets.value === "add") {
-      await addPreset();
-    } else if (editPresets.value === "edit") {
-      await editPreset();
-    } else if (editPresets.value === "remove") {
-      await removePresets();
-    } else if (editPresets.value === "show") {
-      await showPresets();
-    } else if (editPresets.value === "reset") {
-      await resetPresets();
-    } else if (editPresets.value === "cancel") {
-      await recall(false);
-    }
-}
+  // Show options
+  // TODO block preset if one with same name/time exists
+  const editPresets = await prompts({
+    type: "select",
+    name: "value",
+    message: "Choose an option",
+    choices: [
+      { title: "Add preset time", value: "add" },
+      { title: "Edit preset time", value: "edit" },
+      { title: "Remove preset times", value: "remove" },
+      { title: "Show preset times", value: "show" },
+      { title: "Reset preset times", value: "reset" },
+      { title: "Cancel", value: "cancel" },
+    ],
+  });
+  if (editPresets.value === "add") {
+    await addPreset();
+  } else if (editPresets.value === "edit") {
+    await editPreset();
+  } else if (editPresets.value === "remove") {
+    await removePresets();
+  } else if (editPresets.value === "show") {
+    await showPresets();
+  } else if (editPresets.value === "reset") {
+    await resetPresets();
+  } else if (editPresets.value === "cancel") {
+    await recall(false);
+  }
+};
 
 const addPreset = async () => {
   const presetTimes = await config.get("presetOptions");
@@ -184,7 +184,15 @@ const addPreset = async () => {
     // check if preset title already exists
     for (let i = 0; i < presetTimes.length; i++) {
       if (presetTimes[i].title === addPreset.value) {
-        console.log(chalk.red("Preset name already exists with title " + chalk.magenta(presetTimes[i].title) + " and value " + chalk.cyan(presetTimes[i].value) + "."));
+        console.log(
+          chalk.red(
+            "Preset name already exists with title " +
+              chalk.magenta(presetTimes[i].title) +
+              " and value " +
+              chalk.cyan(presetTimes[i].value) +
+              ".",
+          ),
+        );
         return;
       }
     }
@@ -197,10 +205,18 @@ const addPreset = async () => {
       max: 23,
     });
     if (addPresetTime.value !== undefined) {
-      // check if preset time already exists 
+      // check if preset time already exists
       for (let i = 0; i < presetTimes.length; i++) {
         if (presetTimes[i].value === addPresetTime.value) {
-          console.log(chalk.red("Preset time already exists with name " + chalk.magenta(presetTimes[i].title) + " and value " + chalk.cyan(presetTimes[i].value) + "."));
+          console.log(
+            chalk.red(
+              "Preset time already exists with name " +
+                chalk.magenta(presetTimes[i].title) +
+                " and value " +
+                chalk.cyan(presetTimes[i].value) +
+                ".",
+            ),
+          );
           return;
         }
       }
@@ -214,81 +230,85 @@ const addPreset = async () => {
   } else {
     console.log(chalk.red("Preset name undefined."));
   }
-}
+};
 
 const editPreset = async () => {
-        // make prompt for preset time
-        const presetTimes = await config.get("presetOptions");
-        let oldTitle = "";
-        let oldIndex = 0;
-        // make sure there are preset times
-        if (presetTimes.length > 0) {
-          const selectPreset = await prompts({
-            type: "select",
-            name: "value",
-            message: "Select a preset time to edit",
-            choices: presetTimes,
-          });
-          if (selectPreset.value !== undefined) {
-            // edit name
-            const editPreset = await prompts({
-              type: "text",
-              name: "value",
-              message: "Enter a preset name",
-              initial: selectPreset.value.title,
-            });
-            if (editPreset.value !== undefined && editPreset.value !== "") {
-              // check if other preset has same name
-              for (let i = 0; i < presetTimes.length; i++) {
-                if (presetTimes[i].title === editPreset.value ) {
-                  oldTitle = presetTimes[i].title;
-                  oldIndex = i;
-                  if (presetTimes[i].value !== selectPreset.value) {
-                    console.log(chalk.red("Preset name already exists with value " + chalk.magenta(presetTimes[i].value) + "."));
-                    return;
-                  }
-                }
-              }
-              // edit time
-              const editPresetTime = await prompts({
-                type: "number",
-                name: "value",
-                message: "Enter a preset time",
-                initial: selectPreset.value.value,
-                min: 0,
-                max: 23,
-              });
-              if (editPresetTime.value !== undefined) {
-                // check if other preset has same time
-                for (let i = 0; i < presetTimes.length; i++) {
-                  if (presetTimes[i].value === editPresetTime.value && presetTimes[i].title !== oldTitle && i !== oldIndex) {
-                    console.log(chalk.red("Preset time already exists with title " + chalk.magenta(presetTimes[i].title) + "."));
-                    return;
-                  }
-                }
-                // remove old preset
-                for (let i = 0; i < presetTimes.length; i++) {
-                  if (presetTimes[i].value === selectPreset.value) {
-                    presetTimes.splice(i, 1);
-                    break;
-                  }
-                }
-                // add new preset
-                presetTimes.push({ title: editPreset.value, value: editPresetTime.value });
-                presetTimes.sort((a, b) => a.value - b.value);
-                await config.set("presetOptions", presetTimes);
-                console.log(chalk.green("Preset time edited."));
-              } else {
-                console.log(chalk.red("Preset time undefined."));
-              }
-            } else {
-              console.log(chalk.red("Preset name undefined."));
+  // make prompt for preset time
+  const presetTimes = await config.get("presetOptions");
+  let oldTitle = "";
+  let oldIndex = 0;
+  // make sure there are preset times
+  if (presetTimes.length > 0) {
+    const selectPreset = await prompts({
+      type: "select",
+      name: "value",
+      message: "Select a preset time to edit",
+      choices: presetTimes,
+    });
+    if (selectPreset.value !== undefined) {
+      // edit name
+      const editPreset = await prompts({
+        type: "text",
+        name: "value",
+        message: "Enter a preset name",
+        initial: selectPreset.value.title,
+      });
+      if (editPreset.value !== undefined && editPreset.value !== "") {
+        // check if other preset has same name
+        for (let i = 0; i < presetTimes.length; i++) {
+          if (presetTimes[i].title === editPreset.value) {
+            oldTitle = presetTimes[i].title;
+            oldIndex = i;
+            if (presetTimes[i].value !== selectPreset.value) {
+              console.log(
+                chalk.red("Preset name already exists with value " + chalk.magenta(presetTimes[i].value) + "."),
+              );
+              return;
             }
           }
-        } else {
-          console.log(chalk.red("No preset times."));
         }
-}
+        // edit time
+        const editPresetTime = await prompts({
+          type: "number",
+          name: "value",
+          message: "Enter a preset time",
+          initial: selectPreset.value.value,
+          min: 0,
+          max: 23,
+        });
+        if (editPresetTime.value !== undefined) {
+          // check if other preset has same time
+          for (let i = 0; i < presetTimes.length; i++) {
+            if (presetTimes[i].value === editPresetTime.value && presetTimes[i].title !== oldTitle && i !== oldIndex) {
+              console.log(
+                chalk.red("Preset time already exists with title " + chalk.magenta(presetTimes[i].title) + "."),
+              );
+              return;
+            }
+          }
+          // remove old preset
+          for (let i = 0; i < presetTimes.length; i++) {
+            if (presetTimes[i].value === selectPreset.value) {
+              presetTimes.splice(i, 1);
+              break;
+            }
+          }
+          // add new preset
+          presetTimes.push({ title: editPreset.value, value: editPresetTime.value });
+          presetTimes.sort((a, b) => a.value - b.value);
+          await config.set("presetOptions", presetTimes);
+          console.log(chalk.green("Preset time edited."));
+        } else {
+          console.log(chalk.red("Preset time undefined."));
+        }
+      } else {
+        console.log(chalk.red("Preset name undefined."));
+      }
+    }
+  } else {
+    console.log(chalk.red("No preset times."));
+  }
+};
 
 const removePresets = async () => {
   // show prompts for preset time
@@ -303,7 +323,7 @@ const removePresets = async () => {
     });
     // delete preset times
     if (selectPreset.value !== undefined) {
-      // remove preset 
+      // remove preset
       for (let i = 0; i < presetTimes.length; i++) {
         for (const value of selectPreset.value) {
           if (presetTimes[i].value === value) {
@@ -317,16 +337,14 @@ const removePresets = async () => {
   } else {
     console.log(chalk.red("No preset times."));
   }
-}
+};
 
 const showPresets = async () => {
   // print out preset times
   const presetTimes = await config.get("presetOptions");
   // make sure there are preset times
   if (presetTimes.length > 0) {
-    const arrayPresetTimes = [
-      ["Name", "Time"],
-    ];
+    const arrayPresetTimes = [["Name", "Time"]];
     for (let i = 0; i < presetTimes.length; i++) {
       arrayPresetTimes.push([presetTimes[i].title, presetTimes[i].value]);
     }
@@ -334,7 +352,7 @@ const showPresets = async () => {
   } else {
     console.log(chalk.red("No preset times."));
   }
-}
+};
 
 const resetPresets = async () => {
   // make array with default preset times
@@ -346,4 +364,4 @@ const resetPresets = async () => {
   ];
   await config.set("presetOptions", presetTimes);
   console.log(chalk.green("Preset times reset."));
-}
+};

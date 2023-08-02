@@ -238,7 +238,9 @@ const getForecast = async (response, days) => {
           return;
         }
         console.log(
-          chalk.blue("You selected " + chalk.cyan(day.value.date) + ". You can now select a time to view the forecast."),
+          chalk.blue(
+            "You selected " + chalk.cyan(day.value.date) + ". You can now select a time to view the forecast.",
+          ),
         );
         const presetTimes = await config.get("presetOptions");
         if (config.get("traverse") === "preset" && presetTimes !== undefined && presetTimes.length > 0) {
@@ -253,7 +255,13 @@ const getForecast = async (response, days) => {
         } else {
           if (config.get("traverse") === "preset") {
             console.log(chalk.red("No preset options available. Please add some presets."));
-            console.log(chalk.yellow("You can do this by running the command: " + chalk.cyan("weather -c") + chalk.magenta(" (weather --config)")));
+            console.log(
+              chalk.yellow(
+                "You can do this by running the command: " +
+                  chalk.cyan("weather -c") +
+                  chalk.magenta(" (weather --config)"),
+              ),
+            );
             console.log(chalk.blue("Using traverse-dial-style instead."));
           }
           // make number prompt for hour, traverse-dial-style
@@ -267,9 +275,9 @@ const getForecast = async (response, days) => {
           }).then(async hour => {
             printCurrentDetailedForecast(response.current, day.value.hour[hour.value], response, days);
           });
-        } 
+        }
+      });
     });
-  });
 };
 
 // Takes response.location
@@ -325,7 +333,9 @@ const printCurrent = async (response, callback) => {
 
 // Takes response.current
 const printCurrentDetailed = async (response, callback) => {
-  console.log(chalk.blue("Current condition (detailed | last updated: " + chalk.italic.cyan(response.last_updated) + "):"));
+  console.log(
+    chalk.blue("Current condition (detailed | last updated: " + chalk.italic.cyan(response.last_updated) + "):"),
+  );
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
   console.log(chalk.magenta("Temperature: " + chalk.cyan(getTemperatureWithUnit(response))));
   console.log(
@@ -357,7 +367,14 @@ const printCurrentDetailed = async (response, callback) => {
 
 // New method for printing current detailed forecast
 const printCurrentDetailedForecast = async (current, response, callback, days) => {
-  console.log(chalk.blue("Current condition (detailed) for " + chalk.green(response.time) + " (" + chalk.italic.cyan("last updated: " + chalk.italic.cyan(current.last_updated))) + ")");
+  console.log(
+    chalk.blue(
+      "Current condition (detailed) for " +
+        chalk.green(response.time) +
+        " (" +
+        chalk.italic.cyan("last updated: " + chalk.italic.cyan(current.last_updated)),
+    ) + ")",
+  );
   console.log(chalk.magenta("Condition: " + chalk.cyan(response.condition.text)));
   console.log(chalk.magenta("Temperature: " + chalk.cyan(getTemperatureWithUnit(response))));
   console.log(
