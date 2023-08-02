@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.5.0](https://github.com/suptower/worldweather-cli/compare/v0.4.6...v0.5.0) (2023-08-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* directory structure has been adapted
+
+### Bug Fixes
+
+* :boom: restructured project ([ba7e900](https://github.com/suptower/worldweather-cli/commit/ba7e90012d39ec5c216a1b317d0c2956d9edd183))
+
 ## [0.4.6](https://github.com/suptower/worldweather-cli/compare/v0.4.3...v0.4.6) (2023-08-01)
 
 
