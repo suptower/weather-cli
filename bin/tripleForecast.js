@@ -82,3 +82,12 @@ function getTableColumn(date, index) {
 function getTableCloser() {
   return "└──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴───────────────────────────────┘";
 }
+
+function getIcon() {
+  // test cloud icon
+  console.log("             ");
+  console.log("                    .--.           ");
+  console.log("                 .-(    ).         ");
+  console.log("                (___.__)__)        ");
+  console.log("             ");
+}

@@ -26,10 +26,14 @@ import { readFileSync } from "fs";
 // gradient colors
 import gradient from "gradient-string";
 
-// string tables
 
 // read package.json
-const packageJson = JSON.parse(readFileSync("./package.json"));
+import { fileURLToPath } from "url";
+import path, { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const packageJson = JSON.parse(readFileSync(path.join(__dirname, "../package.json"), "utf-8"));
 
 // persist config
 const schema = {
