@@ -5,7 +5,8 @@
     "git",
     "deps",
     "ux",
-    "autodate"
+    "autodate",
+    "forecast"
   ],
   "todo-tree.tree.scanMode": "workspace only"
 }

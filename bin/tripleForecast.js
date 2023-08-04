@@ -2,10 +2,14 @@
 import Conf from "conf";
 
 // terminal styling
-import chalk from "chalk";
+// import chalk from "chalk";
 
 // http requests
 import got from "got";
+
+// weather icons
+import { getIcon } from "./resources/weather_icons.js";
+
 
 // Config
 const config = new Conf({ projectName: "weather-cli" })
@@ -75,6 +79,9 @@ function getTableColumns(date) {
 // Input: index (0-3)
 // Output: Table Column with inner border
 function getTableColumn(date, index) {
+  // to get Icons use the following
+  // string preparation needed
+  // getIcon(date.hour[index * 6].condition.code) + 
   return (date.hour[index * 6].temp_c + "°C " + date.hour[index * 6].condition.text).padEnd(29, " ");
 }
 
@@ -83,11 +90,3 @@ function getTableCloser() {
   return "└──────────────────────────────┴──────────────────────────────┴──────────────────────────────┴───────────────────────────────┘";
 }
 
-function getIcon() {
-  // test cloud icon
-  console.log("             ");
-  console.log("                    .--.           ");
-  console.log("                 .-(    ).         ");
-  console.log("                (___.__)__)        ");
-  console.log("             ");
-}
