@@ -44,7 +44,7 @@ export const tripleForecast = async location => {
 
 // Input: Forecast.Forecastday[date] (whole forecast data of one day)
 const displayTripleForecast = date => {
-  // TODO: Table overview
+  // header + data + closeline
   console.log(getTableHeader(date.date) + getTableColumns(date) + "\n" + getTableCloser() + "\n");
 };
 
@@ -119,11 +119,13 @@ function getTableColumn(date, index) {
 
 // Output: Table Closer with outer border
 function getTableCloser() {
+  // closeline for table
   return (
     "└" + "─".padEnd(33, "─") + "┴" + "─".padEnd(33, "─") + "┴" + "─".padEnd(33, "─") + "┴" + "─".padEnd(33, "─") + "┘"
   );
 }
 
+// presentation of strings next to weather icons
 function splitIconDataStrings(iconString, dataString) {
   const iconLines = iconString.split("\n");
   const dataLines = prepareDataStrings(dataString.split("\n"));
@@ -145,14 +147,8 @@ function splitIconDataStrings(iconString, dataString) {
   return ret.join("\n");
 }
 
+// padEnd with stringlength(string) instead of string.length
 function betterPadEnd(data, length) {
-  // split string in 2 lines if string is longer than length
-  // if (stringLength(data) > length) {
-  //   const splitIndex = Math.floor(stringLength(data) / 2);
-  //   const data1 = data.substring(0, splitIndex);
-  //   const data2 = data.substring(splitIndex);
-  //   return data1 + "\n" + betterPadEnd(data2, length);
-  // }
   while (stringLength(data) < length) {
     data += " ";
   }
@@ -253,6 +249,7 @@ function colorizeTemperature(data) {
   }
 }
 
+// metric / imperial unit
 function getTemperatureInUnit(data) {
   if (UNIT_MODE === "metric") {
     return data.temp_c;

@@ -28,7 +28,7 @@ const dateTime = new Date();
 const API_URL = "http://api.weatherapi.com/v1/current.json?key=" + API_KEY + "&q=";
 const API_URL_FORECAST = "http://api.weatherapi.com/v1/forecast.json?key=" + API_KEY + "&q=";
 
-// three day forecast
+// three day forecast from cmd line directly
 export const threeday = async location => {
   console.log(chalk.blue("Three day forecast for " + location + ":"));
   tripleForecast(location);
