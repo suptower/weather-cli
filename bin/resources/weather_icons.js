@@ -150,13 +150,6 @@ const conditionIcons = {
   VeryCloudy: COLOR_250("             \n     .--.    \n  .-(    ).  \n (___.__)__) ") + COLOR_111("\n             "),
 };
 
-/* Test function
-Object.entries(conditionIcons).forEach(([key, value]) => {
-  console.log(chalk.blue(key));
-  console.log(value);
-});
-*/
-
 export function getIcon(iconCode) {
   for (let i = 0; i < weatherConditions.length; i++) {
     if (weatherConditions[i].code === iconCode) {
@@ -207,19 +200,3 @@ function drawIcon(iconCondition) {
       return conditionIcons.Sunny;
   }
 }
-
-/* not in use right now
-// take string with multiple lines
-// pad the lines with spaces to the center
-// join the lines back together
-// return the string
-function padCenter(string) {
-  const lines = string.split("\n");
-  const maxLength = Math.max(...lines.map(line => line.length));
-  const paddedLines = lines.map(line => {
-    const spaces = " ".repeat((maxLength - line.length) / 2);
-    return spaces + line + spaces;
-  });
-  return paddedLines.join("\n");
-}
-*/
