@@ -3,6 +3,9 @@ import { readFileSync } from "fs";
 
 import chalk from "chalk";
 
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+
 // convert 256 ascii terminal colors to rgb
 const COLOR_33 = chalk.rgb(0, 135, 255); // DodgerBlue1
 const COLOR_111 = chalk.rgb(135, 175, 255); // SkyBlue2
@@ -14,7 +17,11 @@ const COLOR_251 = chalk.rgb(198, 198, 198); // Grey78
 const COLOR_255 = chalk.rgb(238, 238, 238); // Grey93 
 
 // get weather conditions
-const conditions = JSON.parse(readFileSync("./weather_conditions.json"));
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+// const packageJson = JSON.parse(readFileSync(path.join(__dirname, "../package.json"), "utf-8"));
+const conditions = JSON.parse(readFileSync(path.join(__dirname, "./weather_conditions.json"), "utf-8"));
 
 const conditionsArray = Object.entries(conditions);
 
@@ -43,7 +50,7 @@ const conditionNames = {
 };
 
 const conditionIcons = {
-    "Cloudy": COLOR_250("     .--.    \n  .-(    ).  \n (___.__)__) \n             "),
+    "Cloudy": COLOR_250("     .--.    \n  .-(    ).  \n (___.__)__) \n             \n             "),
     "Fog": COLOR_251(" _ - _ - _ - \n  _ - _ - _  \n _ - _ - _ - \n             "),
     "HeavyRain": COLOR_244("     .-.     \n    (   ).   \n   (___(__)  \n") + (COLOR_33("  ‚ʻ‚ʻ‚ʻ‚ʻ   \n  ‚ʻ‚ʻ‚ʻ‚ʻ   ")),
     "HeavyShowers": COLOR_226(" _`/\"\"") + COLOR_244(".-.    \n") + COLOR_226("  ,\\_") + COLOR_244("(   ).  ") + COLOR_226("\n   /") + COLOR_244("(___(__) \n") + (COLOR_33("   ‚ʻ‚ʻ‚ʻ‚ʻ  \n   ‚ʻ‚ʻ‚ʻ‚ʻ  ")),
@@ -69,11 +76,6 @@ Object.entries(conditionIcons).forEach(([key, value]) => {
   console.log(value);
 });
 */
-
-for (let i = 0; i < weatherConditions.length; i++) {
-  console.log(weatherConditions[i].day)
-  console.log(getIcon(weatherConditions[i].code));
-}
 
 export function getIcon(iconCode) {
   for (let i = 0; i < weatherConditions.length; i++) {

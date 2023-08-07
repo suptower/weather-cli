@@ -59,6 +59,7 @@
 		"mem": "^9.0.2",
 		"ora": "^6.3.1",
 		"prompts": "^2.4.2",
+		"string-length": "^6.0.0",
 		"table": "^6.8.1"
 	},
 	"engines": {
