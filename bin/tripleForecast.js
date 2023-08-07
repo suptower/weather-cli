@@ -2,7 +2,7 @@
 import Conf from "conf";
 
 // terminal styling
-// import chalk from "chalk";
+import chalk from "chalk";
 
 // http requests
 import got from "got";
@@ -12,34 +12,38 @@ import { getIcon } from "./resources/weather_icons.js";
 
 import stringLength from "string-length";
 
-
 // Config
-const config = new Conf({ projectName: "weather-cli" })
+const config = new Conf({ projectName: "weather-cli" });
 
 // API key
 const API_KEY = config.get("api");
+
+const UNIT_MODE = config.get("unit");
 
 const API_URL_FORECAST = "http://api.weatherapi.com/v1/forecast.json?key=" + API_KEY + "&q=";
 
 const week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",  "Dec"];
+const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 // Input: Location name
 
-export const tripleForecast = async (location) => {
+export const tripleForecast = async location => {
   const requestURL = API_URL_FORECAST + location + "&days=3&aqi=no&alerts=no";
-  await got(requestURL).json().then((response) => {
-    for (let i = 0; i < response.forecast.forecastday.length; i++) {
-      displayTripleForecast(response.forecast.forecastday[i]);
-    }
-  }).catch((error) => {
-    console.log(error);
-  }); 
+  await got(requestURL)
+    .json()
+    .then(response => {
+      for (let i = 0; i < response.forecast.forecastday.length; i++) {
+        displayTripleForecast(response.forecast.forecastday[i]);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+    });
 };
 
 // Input: Forecast.Forecastday[date] (whole forecast data of one day)
-const displayTripleForecast = (date) => {
+const displayTripleForecast = date => {
   // TODO: Table overview
   console.log(getTableHeader(date.date) + getTableColumns(date) + "\n" + getTableCloser() + "\n");
 };
@@ -49,7 +53,7 @@ const displayTripleForecast = (date) => {
 function getTableHeader(inputDate) {
   // dateFmt := "┤ " + day.Date.Format("Mon 02. Jan") + " ├"
   // get Day of Week
-  let DayOfWeek = week[new Date(inputDate).getDay()]
+  let DayOfWeek = week[new Date(inputDate).getDay()];
   // get Day of Month
   const DayOfMonth = new Date(inputDate).getDate();
   if (DayOfMonth < 10) {
@@ -59,10 +63,31 @@ function getTableHeader(inputDate) {
   // get Month
   const Month = month[new Date(inputDate).getMonth()];
   const dateHeader = DayOfWeek + " " + DayOfMonth + ". " + Month;
-  let ret = ("").padEnd(61, " ") + "┌─────────────┐                                                     \n";
-  ret += "┌" + ("─").padEnd(33, "─") + "┬" + ("─").padEnd(26, "─") + "┤ " + dateHeader.padEnd(12, " ") + "├" + ("─").padEnd(26, "─") + "┬" + ("─").padEnd(33, "─") + "┐\n";
-  ret += "│              Morning            │               Noon       └──────┬──────┘      Evening             │              Night              │\n";
-  ret += "├" + ("─").padEnd(33, "─") + "┼" + ("─").padEnd(33, "─") + "┼" + ("─").padEnd(33, "─") + "┼" + ("─").padEnd(33, "─") + "┤\n";
+  let ret = "".padEnd(61, " ") + "┌─────────────┐                                                     \n";
+  ret +=
+    "┌" +
+    "─".padEnd(33, "─") +
+    "┬" +
+    "─".padEnd(26, "─") +
+    "┤ " +
+    dateHeader.padEnd(12, " ") +
+    "├" +
+    "─".padEnd(26, "─") +
+    "┬" +
+    "─".padEnd(33, "─") +
+    "┐\n";
+  ret +=
+    "│              Morning            │               Noon       └──────┬──────┘      Evening             │              Night              │\n";
+  ret +=
+    "├" +
+    "─".padEnd(33, "─") +
+    "┼" +
+    "─".padEnd(33, "─") +
+    "┼" +
+    "─".padEnd(33, "─") +
+    "┼" +
+    "─".padEnd(33, "─") +
+    "┤\n";
   return ret;
 }
 
@@ -84,13 +109,19 @@ function getTableColumn(date, index) {
   // to get Icons use the following
   // string preparation needed
   const iconString = getIcon(date.hour[index * 6].condition.code);
-  const dataString = (date.hour[index * 6].temp_c + "°C \n" + date.hour[index * 6].condition.text).padEnd(20, " ");
+  const dataString = (
+    colorizeTemperature(getTemperatureInUnit(date.hour[index * 6])) +
+    "\n" +
+    date.hour[index * 6].condition.text
+  ).padEnd(20, " ");
   return splitIconDataStrings(iconString, dataString);
 }
 
 // Output: Table Closer with outer border
 function getTableCloser() {
-  return "└" + ("─").padEnd(33, "─") + "┴" + ("─").padEnd(33, "─") + "┴" + ("─").padEnd(33, "─") + "┴" + ("─").padEnd(33, "─") + "┘";
+  return (
+    "└" + "─".padEnd(33, "─") + "┴" + "─".padEnd(33, "─") + "┴" + "─".padEnd(33, "─") + "┴" + "─".padEnd(33, "─") + "┘"
+  );
 }
 
 function splitIconDataStrings(iconString, dataString) {
@@ -131,7 +162,7 @@ function betterPadEnd(data, length) {
 // gets an array of strings as input
 // returns an array of strings with a maximum length of 22
 function prepareDataStrings(dataString) {
-  const maxLength = 18
+  const maxLength = 18;
   // Split each line in N lines if line is longer than 22
   const ret = [];
   for (let i = 0; i < dataString.length; i++) {
@@ -165,16 +196,67 @@ function prepareDataStrings(dataString) {
 // Process: 5 lines line by line, then side by side
 function postColumns(data) {
   const lines = data.split("\n");
-  const ret = ["","","","",""];
+  const ret = ["", "", "", "", ""];
   for (let i = 0; i < lines.length; i++) {
     if (ret[i % 5] === undefined) {
       ret[i % 5] = "";
     }
-    ret[i % 5] = (ret[i % 5]) + lines[i];
+    ret[i % 5] = ret[i % 5] + lines[i];
   }
   // add most right border
   for (let i = 0; i < ret.length; i++) {
     ret[i] += "│";
   }
   return ret.join("\n");
+}
+
+// Colorize String based on temperature (color ramp)
+function colorizeTemperature(data) {
+  if (UNIT_MODE === "imperial") {
+    const temp = parseFloat(data);
+    const tempString = String(temp) + "°F";
+    let coloredString = "";
+    if (temp < 32) {
+      coloredString = chalk.blue(tempString);
+    } else if (temp < 41) {
+      coloredString = chalk.cyan(tempString);
+    } else if (temp < 50) {
+      coloredString = chalk.green(tempString);
+    } else if (temp < 59) {
+      coloredString = chalk.yellow(tempString);
+    } else if (temp < 68) {
+      coloredString = chalk.rgb(252, 144, 3)(tempString);
+    } else if (temp < 77) {
+      coloredString = chalk.red(tempString);
+    }
+    return coloredString;
+  } else {
+    const temp = parseFloat(data);
+    const tempString = String(temp) + "°C";
+    let coloredString = "";
+    if (temp < 0) {
+      coloredString = chalk.blue(tempString);
+    } else if (temp < 5) {
+      coloredString = chalk.cyan(tempString);
+    } else if (temp < 10) {
+      coloredString = chalk.green(tempString);
+    } else if (temp < 15) {
+      coloredString = chalk.yellow(tempString);
+    } else if (temp < 20) {
+      coloredString = chalk.rgb(252, 144, 3)(tempString);
+    } else if (temp < 25) {
+      coloredString = chalk.red(tempString);
+    } else {
+      coloredString = chalk.magenta(tempString);
+    }
+    return coloredString;
+  }
+}
+
+function getTemperatureInUnit(data) {
+  if (UNIT_MODE === "metric") {
+    return data.temp_c;
+  } else {
+    return data.temp_f;
+  }
 }
