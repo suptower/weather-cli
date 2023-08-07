@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.5.2](https://github.com/suptower/worldweather-cli/compare/v0.5.1...v0.5.2) (2023-08-07)
+
+
+### Features
+
+* :sparkles: implemented simple 3 day forecast ([be2d05f](https://github.com/suptower/worldweather-cli/commit/be2d05f0a62595ce42fb9bb3040a2ed1172df682))
+* **forecast:** :sparkles: colorizing temperature in 3-day-forecast ([ea20573](https://github.com/suptower/worldweather-cli/commit/ea20573751ea906da217e9de260990da7fd049e0))
+* **forecast:** :sparkles: fully implemented 3-day-forecast ([7e0aef2](https://github.com/suptower/worldweather-cli/commit/7e0aef291ffbe3eb6e9870de1f1763c987fdc891))
+* **forecast:** :tada: implemented weather ascii art ([a7230ed](https://github.com/suptower/worldweather-cli/commit/a7230ed5efcfb7521d902afc0480fcbc6b28508f))
+
+
+### Bug Fixes
+
+* **package:** :ambulance: fixed package.json file issues ([a614d8d](https://github.com/suptower/worldweather-cli/commit/a614d8d71d3137b0523dbc88b6068b4659f2dd3a))
+
 ## [0.5.1](https://github.com/suptower/worldweather-cli/compare/v0.5.0...v0.5.1) (2023-08-02)
 
 
