@@ -13,6 +13,9 @@ import prompts from "prompts";
 // spinners
 import ora from "ora";
 
+// triple forecast
+import { tripleForecast } from "./tripleForecast.js";
+
 const config = new Conf({ projectName: "weather-cli" });
 
 // get API key from config
@@ -24,6 +27,12 @@ const dateTime = new Date();
 // set API URL
 const API_URL = "http://api.weatherapi.com/v1/current.json?key=" + API_KEY + "&q=";
 const API_URL_FORECAST = "http://api.weatherapi.com/v1/forecast.json?key=" + API_KEY + "&q=";
+
+// three day forecast from cmd line directly
+export const threeday = async location => {
+  console.log(chalk.blue("Three day forecast for " + location + ":"));
+  tripleForecast(location);
+};
 
 // fast mode
 export const weather = async location => {
@@ -139,6 +148,7 @@ const promptMenu = async response => {
       { title: "Current condition", value: "current" },
       { title: "Current condition (detailed)", value: "currentdetailed" },
       { title: "Forecast", value: "forecast" },
+      { title: "3-day forecast", value: "3day" },
       { title: "Exit", value: "exit" },
     ],
   });
@@ -194,6 +204,11 @@ const promptMenu = async response => {
       } else {
         console.log(chalk.red("Forecast cancelled."));
       }
+      break;
+    }
+    case "3day": {
+      console.log(chalk.blue("3-day forecast:"));
+      tripleForecast(response.location.name);
       break;
     }
     case "exit": {

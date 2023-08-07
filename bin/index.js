@@ -12,7 +12,7 @@ import chalk from "chalk";
 import prompts from "prompts";
 
 // weather api
-import { weather, weatherprompt } from "./weather.js";
+import { threeday, weather, weatherprompt } from "./weather.js";
 
 // config handler
 import { configHandler } from "./configHandler.js";
@@ -26,10 +26,13 @@ import { readFileSync } from "fs";
 // gradient colors
 import gradient from "gradient-string";
 
-// string tables
-
 // read package.json
-const packageJson = JSON.parse(readFileSync("./package.json"));
+import { fileURLToPath } from "url";
+import path, { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const packageJson = JSON.parse(readFileSync(path.join(__dirname, "../package.json"), "utf-8"));
 
 // persist config
 const schema = {
@@ -72,6 +75,7 @@ const options = getopts(argv, {
     delete_config: "d",
     env: "e",
     fast: "f",
+    three_day: "t",
     info: "i",
   },
 });
@@ -87,14 +91,15 @@ if (options.help) {
         $ weather [options] [location]
 
     Options:
-        -h, --help          output usage information
-        -v, --version       output the version number
-        -a, --api           set api key
-        -c, --config        show config
-        -d, --delete_config clear config
-        -e, --env           set api key from environment variable API_KEY
-        -f , --fast [loc]   fast mode, no prompt, location as arg
-        -i, --info          show project related info
+        -h, --help              output usage information
+        -v, --version           output the version number
+        -a, --api               set api key
+        -c, --config            show config
+        -d, --delete_config     clear config
+        -e, --env               set api key from environment variable API_KEY
+        -f , --fast [loc]       fast mode, no prompt, location as arg
+        -t, --three_day [loc]   show three day forecast
+        -i, --info              show project related info
 
     Examples:
         $ weather Munich
@@ -103,6 +108,7 @@ if (options.help) {
         $ weather --config
         $ weather --info
         $ weather -f Munich
+        $ weather -t Munich
         $ weather
     `),
   );
@@ -168,10 +174,20 @@ if (options.config) {
     }
     process.exit(0);
   })();
+} else if (options.three_day) {
+  // three day forecast
+  console.clear();
+  if (argv.length > 1) {
+    argv.shift();
+    threeday(argv.join(" "));
+  } else {
+    console.log(chalk.red("You need to specify a location."));
+  }
 } else if (options.fast) {
   // fast mode, only condition and temperature
   console.clear();
   if (argv.length > 1) {
+    argv.shift();
     weather(argv.join(" "));
   } else {
     console.log(chalk.red("You need to specify a location."));

@@ -18,13 +18,15 @@ Usage:
         $ weather [options] [location]
 
     Options:
-        -h, --help          output usage information
-        -v, --version       output the version number
-        -a, --api           set api key
-        -c, --config        show config
-        -e, --env           set api key from environment variable API_KEY
-        -f , --fast [loc]   fast mode, no prompt, location as arg
-        -i, --info          show project related info
+        -h, --help              output usage information
+        -v, --version           output the version number
+        -a, --api               set api key
+        -c, --config            show config
+        -d, --delete_config     clear config
+        -e, --env               set api key from environment variable API_KEY
+        -f , --fast [loc]       fast mode, no prompt, location as arg
+        -t, --three_day [loc]   show three day forecast
+        -i, --info              show project related info
 
     Examples:
         $ weather Munich
@@ -33,6 +35,7 @@ Usage:
         $ weather --config
         $ weather --info
         $ weather -f Munich
+        $ weather -t Munich
         $ weather
 ```
 
