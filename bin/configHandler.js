@@ -30,6 +30,8 @@ export const configHandler = async noclear => {
       { title: "Set temperature unit", value: "unit" },
       { title: "Set forecast hour traversing style", value: "traverse" },
       { title: "Preset Times Configuration", value: "preset" },
+      { title: "Set favorite location", value: "location"},
+      { title: "Set default action for blank command", value: "default"},
       { title: "Clear config", value: "clear" },
       { title: "Cancel", value: "cancel" },
     ],
@@ -56,6 +58,14 @@ export const configHandler = async noclear => {
   }
   if (response.config === "preset") {
     await presetConfig();
+    await recall(false);
+  } 
+  if (response.config === "location") {
+    await setLocation();
+    await recall(false);
+  } 
+  if (response.config === "default") {
+    await setDefault();
     await recall(false);
   } else if (response.config === "cancel") {
     process.exit(0);
@@ -364,3 +374,40 @@ const resetPresets = async () => {
   await config.set("presetOptions", presetTimes);
   console.log(chalk.green("Preset times reset."));
 };
+
+const setLocation = async () => {
+  const current = await config.get("location");
+  console.log(chalk.yellow("Current favorite location: " + chalk.magenta(current)));
+  const location = await prompts({
+    type: "text",
+    name: "value",
+    message: "Enter a favorite location",
+    initial: current,
+  });
+  if (location.value !== undefined && location.value !== "") {
+    await config.set("location", location.value);
+    console.log(chalk.green("Favorite location set."));
+  } else {
+    console.log(chalk.red("Favorite location undefined."));
+  }
+}
+
+const setDefault = async () => {
+  const current = await config.get("default");
+  console.log(chalk.yellow("Current default preset: " + chalk.magenta(current)));
+  const action = await prompts({
+    type: "select",
+    name: "value",
+    message: "Select a default preset",
+    choices: [
+      { title: "Prompt Menu", value: "prompt" },
+      { title: "Three Day Forecast", value: "threeday"},
+    ],
+  });
+  if (action.value !== undefined) {
+    await config.set("default", action.value);
+    console.log(chalk.green("Default preset set."));
+  } else {
+    console.log(chalk.red("Default preset undefined."));
+  }
+}

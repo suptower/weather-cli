@@ -29,6 +29,7 @@ import gradient from "gradient-string";
 // read package.json
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
+import { tripleForecast } from "./tripleForecast.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -53,6 +54,14 @@ const schema = {
       { title: "Evening", value: "18" },
     ],
   },
+  location: {
+    type: "string",
+    default: "Munich",
+  },
+  default: {
+    type: "string",
+    default: "threeday",
+  }
 };
 
 const config = new Conf({ projectName: "weather-cli", schema });
@@ -198,6 +207,12 @@ if (options.config) {
   if (argv.length > 0) {
     weatherprompt(argv.join(" "));
   } else {
-    weatherprompt();
+    const fav = await config.get("location");
+    const setting = await config.get("default");
+    if (setting === "threeday") {
+      tripleForecast(fav);
+    } else {
+      weatherprompt(fav);
+    }
   }
 }
