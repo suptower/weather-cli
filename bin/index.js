@@ -221,7 +221,7 @@ if (options.config) {
     const fav = await config.get("location");
     const setting = await config.get("default");
     if (setting === "threeday") {
-      tripleForecast(fav);
+      threeday(fav);
     } else {
       weatherprompt(fav);
     }
