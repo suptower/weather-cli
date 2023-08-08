@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.0](https://github.com/suptower/worldweather-cli/compare/v0.5.2...v1.0.0) (2023-08-08)
+
+
+### Features
+
+* **package:** :memo: updated README.md + added post-install script ([6b41f04](https://github.com/suptower/worldweather-cli/commit/6b41f04e293144cb85ba8229c3da3444ddec7634))
+* **package:** :sparkles: favorite city system ([85e8015](https://github.com/suptower/worldweather-cli/commit/85e8015d9e139b08ed2b43163440043e532e7039))
+
 ## [0.5.2](https://github.com/suptower/worldweather-cli/compare/v0.5.1...v0.5.2) (2023-08-07)
 
 
