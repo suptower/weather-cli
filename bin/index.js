@@ -29,7 +29,6 @@ import gradient from "gradient-string";
 // read package.json
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
-import { tripleForecast } from "./tripleForecast.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
