@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.1](https://github.com/suptower/worldweather-cli/compare/v1.0.0...v1.0.1) (2023-08-08)
+
+
+### Bug Fixes
+
+* **forecast:** :children_crossing: blank threeday shows location ([f973b45](https://github.com/suptower/worldweather-cli/commit/f973b4589d918742ccf8acb6271c102ad4f64157))
+
 ## [1.0.0](https://github.com/suptower/worldweather-cli/compare/v0.5.2...v1.0.0) (2023-08-08)
 
 
