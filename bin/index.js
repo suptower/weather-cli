@@ -85,6 +85,7 @@ const options = getopts(argv, {
     env: "e",
     fast: "f",
     three_day: "t",
+    prompt: "p",
     info: "i",
   },
 });
@@ -108,6 +109,7 @@ if (options.help) {
         -e, --env               set api key from environment variable API_KEY
         -f , --fast [loc]       fast mode, no prompt, location as arg
         -t, --three_day [loc]   show three day forecast
+        -p, --prompt [loc]      prompt mode (default when using blank command with location as arg)
         -i, --info              show project related info
 
     Examples:
@@ -200,6 +202,15 @@ if (options.config) {
     weather(argv.join(" "));
   } else {
     console.log(chalk.red("You need to specify a location."));
+  }
+} else if (options.prompt) {
+  // prompt for location
+  console.clear();
+  if (argv.length > 1) {
+    argv.shift();
+    weatherprompt(argv.join(" "));
+  } else {
+    weatherprompt();
   }
 } else {
   // prompt for location

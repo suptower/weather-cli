@@ -32,7 +32,7 @@ export const configHandler = async noclear => {
       { title: "Preset Times Configuration", value: "preset" },
       { title: "Set favorite location", value: "location"},
       { title: "Set default action for blank command", value: "default"},
-      { title: "Clear config", value: "clear" },
+      { title: "Reset config", value: "reset" },
       { title: "Cancel", value: "cancel" },
     ],
   });
@@ -48,7 +48,7 @@ export const configHandler = async noclear => {
     await setUnit();
     await recall(true);
   }
-  if (response.config === "clear") {
+  if (response.config === "reset") {
     await clearConfig();
     await recall(true);
   }
@@ -127,7 +127,7 @@ const setUnit = async () => {
 };
 
 const clearConfig = async () => {
-  await config.clear();
+  await config.reset();
   console.log(chalk.green("Config cleared."));
 };
 
