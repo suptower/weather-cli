@@ -30,8 +30,8 @@ export const configHandler = async noclear => {
       { title: "Set temperature unit", value: "unit" },
       { title: "Set forecast hour traversing style", value: "traverse" },
       { title: "Preset Times Configuration", value: "preset" },
-      { title: "Set favorite location", value: "location"},
-      { title: "Set default action for blank command", value: "default"},
+      { title: "Set favorite location", value: "location" },
+      { title: "Set default action for blank command", value: "default" },
       { title: "Reset config", value: "reset" },
       { title: "Cancel", value: "cancel" },
     ],
@@ -59,11 +59,11 @@ export const configHandler = async noclear => {
   if (response.config === "preset") {
     await presetConfig();
     await recall(false);
-  } 
+  }
   if (response.config === "location") {
     await setLocation();
     await recall(false);
-  } 
+  }
   if (response.config === "default") {
     await setDefault();
     await recall(false);
@@ -390,7 +390,7 @@ const setLocation = async () => {
   } else {
     console.log(chalk.red("Favorite location undefined."));
   }
-}
+};
 
 const setDefault = async () => {
   const current = await config.get("default");
@@ -401,7 +401,7 @@ const setDefault = async () => {
     message: "Select a default preset",
     choices: [
       { title: "Prompt Menu", value: "prompt" },
-      { title: "Three Day Forecast", value: "threeday"},
+      { title: "Three Day Forecast", value: "threeday" },
     ],
   });
   if (action.value !== undefined) {
@@ -410,4 +410,4 @@ const setDefault = async () => {
   } else {
     console.log(chalk.red("Default preset undefined."));
   }
-}
+};

@@ -61,7 +61,7 @@ const schema = {
   default: {
     type: "string",
     default: "threeday",
-  }
+  },
 };
 
 const config = new Conf({ projectName: "weather-cli", schema });
