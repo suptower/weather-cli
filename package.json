@@ -1,6 +1,6 @@
 {
 	"name": "@suptower/weather-cli",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"date": "Updated on 8th of December 2023.",
 	"description": "A package to retrieve weather information directly from your terminal.",
 	"exports": "./bin/index.js",
