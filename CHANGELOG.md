@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.0.3](https://github.com/suptower/worldweather-cli/compare/v1.0.2...v1.0.3) (2023-11-08)
+
+
+### Bug Fixes
+
+* **autodate:** :bug: added missing month ([222f377](https://github.com/suptower/worldweather-cli/commit/222f377f6b4d6eaed6d2c414260fa907be5a8688))
+
 ## [1.0.2](https://github.com/suptower/worldweather-cli/compare/v1.0.1...v1.0.2) (2023-11-08)
 
 ## [1.0.1](https://github.com/suptower/worldweather-cli/compare/v1.0.0...v1.0.1) (2023-08-08)
