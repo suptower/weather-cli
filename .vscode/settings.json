@@ -6,7 +6,8 @@
     "deps",
     "ux",
     "autodate",
-    "forecast"
+    "forecast",
+    "index"
   ],
   "todo-tree.tree.scanMode": "workspace only"
 }
