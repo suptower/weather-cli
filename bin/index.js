@@ -1,5 +1,5 @@
 #!/usr/bin/env node --no-warnings
-// make us of .env file
+// make use of .env file
 import "dotenv/config";
 
 // persist config
